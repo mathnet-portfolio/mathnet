@@ -1,0 +1,59 @@
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide_to_left-enter-active,
+.slide_to_left-leave-active {
+  transition: all 0.5s ease;
+}
+
+.slide_to_left-enter {
+  left: 100%;
+  opacity: 0;
+}
+
+.slide_to_left-enter-to {
+  left: 0;
+  opacity: 1;
+}
+
+.slide_to_left-leave {
+  left: 0;
+  opacity: 1;
+}
+
+.slide_to_left-leave-to {
+  left: -100%;
+  opacity: 0;
+}
+
+.slide_to_right-enter-active,
+.slide_to_right-leave-active {
+  transition: all 0.5s ease;
+}
+
+.slide_to_right-enter {
+  left: -100%;
+  opacity: 0;
+}
+
+.slide_to_right-enter-to {
+  left: 0;
+  opacity: 1;
+}
+
+.slide_to_right-leave {
+  left: 0;
+  opacity: 1;
+}
+
+.slide_to_right-leave-to {
+  left: 100%;
+  opacity: 0;
+}

@@ -1,0 +1,102 @@
+{% extends "mathQA/layouts/base.html" %}
+{% load static %}
+{% load md5url %}
+
+{% block tab-title %}新規登録{% endblock %}
+
+{% block body_class %}doorway{% endblock %}
+
+{% block header-right_space %}
+<a class="header-btn" href="{% url 'mathQA:login' %}">ログイン</a>
+<a class="header-btn header-registerBtn" href="{% url 'mathQA:register' %}">新規登録</a>
+{% endblock header-right_space %}
+
+{% block nav %}
+{% endblock %}
+
+{% block level-body_tag %}
+<article class="l-grid">
+  <section class="l-grid-r doorway-msg">
+    <div class="doorway-msg-wrapper">
+      <h1 class="doorway-msg-title">新規登録</h1>
+      <div class="doorway-msg-lead">
+        <p>数学って、どんなに考えてもわからないときもあるよね</p>
+      </div>
+      <ul class="doorway-msg-point">
+        <li>・便利な数式入力</li>
+        <li>・受験数学から大学数学まで</li>
+        <li>・数学のための質問場所</li>
+      </ul>
+    </div>
+  </section>
+  <section class="l-grid-l">
+    {% csrf_token %}
+    <div class="doorway-main-wrapper">
+      <a class="doorway-goto" href="{% url 'mathQA:login' %}"><span
+          class="material-icons">emoji_people</span>おかえり！ログインはこっちだよ</a>
+      <div class="doorway-section doorway-sns_login">
+        <p class="doorway-section-title">SNSで新規登録</p>
+        <a href="{% url 'social:begin' 'twitter' %}">
+          <p class="doorway-sns_login-icon">
+            <img src="{% md5url 'img/twitter-icon.svg' %}" alt="Twitter icon">
+          </p>
+          <p class="doorway-sns_login-text">Twitterで新規登録</p>
+        </a>
+        <a href="{% url 'social:begin' 'google-oauth2' %}">
+          <p class="doorway-sns_login-icon">
+            <img src="{% md5url 'img/google-icon.svg' %}" alt="Google icon">
+          </p>
+          <p class="doorway-sns_login-text">Googleで新規登録</p>
+        </a>
+        <a href="{% url 'social:begin' 'facebook' %}">
+          <p class="doorway-sns_login-icon">
+            <img src="{% md5url 'img/facebook-icon.png' %}" alt="Facebook icon">
+          </p>
+          <p class="doorway-sns_login-text">Facebookで新規登録</p>
+        </a>
+      </div>
+      <div class="doorway-section">
+        <p class="doorway-section-title">メールアドレスで新規登録</p>
+        <label for="js-userName" class="doorway-main-item">
+          <p>ユーザネーム</p>
+        </label>
+        <input id="js-userName" class="oneline_input doorway-input" type="text">
+        <label for="js-email" class="doorway-main-item">
+          <p>メールアドレス</p>
+        </label>
+        <input id="js-email" class="oneline_input doorway-input" type="email">
+        <label for="js-password" class="doorway-main-item">
+          <p>パスワード</p>
+        </label>
+        <input id="js-password" class="oneline_input doorway-input" type="password">
+        <label for="js-passwordForCheck" class="doorway-main-item">
+          <p>パスワード（確認用）</p>
+        </label>
+        <input id="js-passwordForCheck" class="oneline_input doorway-input" type="password">
+        <label for="js-termBtn" class="normal_checkbox">
+          <input id="js-termBtn" class="normal_checkbox-input" type="checkbox">
+          <span><a href="/terms_of_service/">利用規約</a>に同意する。</span>
+        </label>
+        <button id="js-registerBtn" class="normal_btn doorway-button" class="input" type="button">新規登録</button>
+        <div class="form-error">
+          <p id="js-doorwayError">&nbsp;</p>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+</article>
+{% endblock level-body_tag %}
+
+{% block fixer %}
+{% endblock fixer %}
+
+{% block r_sidebar %}
+{% endblock r_sidebar %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% block js-end-load %}
+<script defer src=" {% md5url 'js/register.js' %}"></script>
+{% endblock %}

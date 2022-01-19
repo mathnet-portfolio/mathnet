@@ -1,0 +1,33 @@
+.footer {
+  background-color: $color-dark-blue;
+}
+
+.footer-body {
+  color: $color-white;
+  a {
+    color: $color-white;
+  }
+  font-size: .8rem;
+}
+
+.footer-section {
+  img {
+    display: block;
+    width: min(15rem, 80%);
+  }
+  p {
+    display: block;
+    width: min(15rem, 80%);
+    margin-top: .5rem;
+    text-align: center;
+  }
+}
+
+.footer-privacy_policy {
+  display: block;
+  margin-top: 3rem;
+}
+
+.footer-text {
+  margin-top: 1rem;
+}

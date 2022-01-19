@@ -1,0 +1,18 @@
+{% extends "mathQA/layouts/base.html" %}
+{% load static %}
+{% load md5url %}
+
+{% block tab-title %}開発中{% endblock %}
+
+{% block nav-now %}
+<a href="{% url 'mathQA:index' %}">ホーム</a> >
+<a href="{% url 'mathQA:undone' %}">開発中</a>
+{% endblock %}
+
+{% block main %}
+ごめんなさい。。。この機能は現在準備中です！ご期待を！
+{% endblock main %}
+
+{% block js-end-load %}
+<script defer src="{% md5url 'js/mathForm.js' %}"></script>
+{% endblock %}

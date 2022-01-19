@@ -1,0 +1,124 @@
+{% extends "mathQA/layouts/base.html" %}
+{% load static %}
+{% load md5url %}
+
+{% block tab-title %}設定{% endblock %}
+
+{% block nav-now %}
+<a href="{% url 'mathQA:index' %}">ホーム</a> >
+<a href="{% url 'mathQA:user' %}">設定</a>
+{% endblock %}
+
+{% block level-body_tag %}
+<section class="l-popBg popBg">
+  <div class="l-pop pop">
+    <div class="close_btn">
+      <span class="material-icons close_icon">close</span>
+    </div>
+    <div class="pop-title">
+      <p>ユーザネーム変更</p>
+    </div>
+    <label class="pop-label" for="js-oldValue">現在</label>
+    <input id="js-oldValue" class="pop-text_form" readonly type="text">
+    <div class="setting-value setting-value-img pop-icon_edit"><img src="{{ MEDIA_URL }}{{user.icon}}" alt="アイコン画像">
+    </div>
+    <label class="pop-label" for="js-newValue">変更後</label>
+    <input id="js-newValue" class="pop-text_form pop-new_text_form" type="text">
+    <label class="normal_btn pop-icon_edit">
+      アイコンを選択
+      <input id="js-newValue-icon" class="file_input" type="file">
+    </label>
+    <button id="js-edit_btn" class="normal_btn pop-edit_btn">変更</button>
+    <div class="form-error">
+      <p id="js-setting-error"></p>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block main %}
+<div class="setting-wrapper">
+  <div class="l-setting-menus setting-menus">
+    <div class="l-setting-menu setting-menu--selected"><button class="setting-menu-btn"
+        data-type="account">アカウント</button></div>
+    <div class="l-setting-menu"><button class="setting-menu-btn" data-type="my_q">マイ質問</button></div>
+    <div class="l-setting-menu"><button class="setting-menu-btn" data-type="my_a">マイ回答</button></div>
+    <div class="l-setting-menu"><button class="setting-menu-btn" data-type="email">メール配信</button></div>
+  </div>
+  <section class="l-setting-main setting-main--account">
+    <div class="setting-row">
+      <div class="setting-item">ユーザネーム</div>
+      <div class="setting-value">{{user.username}}</div>
+      <button data-item="userName" type="button" class="normal_btn setting-edit-btn">変更</button>
+    </div>
+    <div class="setting-row">
+      <div class="setting-item">アイコン</div>
+      <div class="setting-value setting-value-img"><img src="{{ MEDIA_URL }}{{user.icon}}" alt="アイコン画像"></div>
+      <button data-item="icon" type="button" class="normal_btn setting-edit-btn">変更</button>
+    </div>
+    <div class="setting-row setting-row--email">
+      <div class="setting-alert">
+        {% if user.email == '' %}
+        <span class="material-icons">warning</span>
+        <p>メールアドレスを登録して下さい。SNS登録の方は、登録してあるメールアドレスが別のアカウントと重複した可能性があります。</p>
+        {% elif not user.verified %}
+        <span class="material-icons">warning</span>
+        <p>メールを送信しました。メールを確認して、有効化してください。m(_ _)m</p>
+        {% endif %}
+      </div>
+      <div class="setting-item">登録メールアドレス</div>
+      <div class="setting-value">{{user.email}}</div>
+      <div class="setting-wrp_edit-btn">
+        {% if not request.user.verified and user.email %}
+        <button data-item="resend-email" type="button" class="normal_btn resend-email setting-edit-btn">再送信</button>
+        {% endif %}
+        <button data-item="email" type="button" class="normal_btn setting-edit-btn setting-edit-btn-email">変更</button>
+      </div>
+    </div>
+    <div class="setting-row">
+      <div class="setting-item">パスワード</div>
+      <div class="setting-value">*********</div>
+      <button data-item="password" type="button" class="normal_btn setting-edit-btn">変更</button>
+    </div>
+    <div class="setting-row">
+      <div class="setting-item"><a href="{% url 'mathQA:logout' %}">ログアウトする</a></div>
+    </div>
+  </section>
+  <section class="l-setting-main setting-main--email">
+    未実装ですm(_ _)m
+  </section>
+  <section class="l-setting-main setting-main--my_q">
+    {% for question in user.question_set.all %}
+    <div class="setting-row setting-my_post">
+      <a href="{% url 'mathQA:detail' question.id %}">{{ question.contents|truncatechars:20 }}</a>
+    </div>
+    {% endfor %}
+  </section>
+  <section class="l-setting-main setting-main--my_a">
+    {% for answer in user.answer_set.all %}
+    <div class="setting-row setting-my_post">
+      <a href="{% url 'mathQA:detail' answer.id %}">{{ answer.question.contents|truncatechars:20 }}</a>
+      <p>解答 : {{ answer.contents }}</p>
+    </div>
+    {% endfor %}
+  </section>
+</div>
+
+</section>
+{% endblock main %}
+
+{% block r_sidebar %}
+{% endblock %}
+
+{% block l_sidebar %}
+{% endblock l_sidebar %}
+
+{% block js-end-load %}
+<script defer src="{% md5url 'js/user.js' %}"></script>
+<script>
+  let email = '{{email}}';
+  if (email) {
+    alert(email + "は既に使われています。別のメールアドレスに変更してください。");
+  }
+</script>
+{% endblock %}

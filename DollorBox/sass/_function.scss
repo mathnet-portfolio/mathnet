@@ -1,0 +1,31 @@
+// 参考: https://note.com/takamoso/n/n82cdb89f024f
+
+// Sassのmin()関数
+@function _min($numbers...) {
+  @return min($numbers...);
+}
+
+// CSSのmin()関数
+@function min($values...) {
+  @return unquote('min(#{$values})');
+}
+
+// Sassのmin()関数
+@function _max($numbers...) {
+  @return max($numbers...);
+}
+
+// CSSのmin()関数
+@function max($values...) {
+  @return unquote('max(#{$values})');
+}
+
+// Sassのmin()関数
+@function _minmax($numbers...) {
+  @return minmax($numbers...);
+}
+
+// CSSのmin()関数
+@function minmax($values...) {
+  @return unquote('minmax(#{$values})');
+}

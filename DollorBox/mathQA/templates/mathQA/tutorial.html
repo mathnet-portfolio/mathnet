@@ -1,0 +1,164 @@
+{% extends "mathQA/layouts/base.html" %}
+{% load static %}
+{% load md5url %}
+
+{% block tab-title %}チュートリアル{% endblock %}
+
+{% block nav-now %}
+<a href="{% url 'mathQA:index' %}">ホーム</a> >
+<a href="{% url 'mathQA:tutorial' %}">チュートリアル</a>
+{% endblock %}
+
+{% block main %}
+<div class="basic_main">
+  <h1>数式入力のチュートリアル</h1>
+  <p>マスネットはmathjaxに対応しており数式を美しく表示することが出来ます。<br>
+    このチュートリアルではmathjaxの基本的な文法を取り扱います。</p>
+  <h2>インライン数式とディスプレイ数式</h2>
+  <p>始めに数式の例を見てみましょう</p>
+  <section class="l-post">
+    <p class="ermsg"></p>
+    <div class="l-right_post_box">
+      {% csrf_token %}
+      <div class="mathForm" data-json='{"post_url": "/writeQ/"}'>
+        <div class="mathForm_btns">
+          <div class="formula-section formula-section-special"></div>
+          <div class="formula-section formula-section-symbol"></div>
+          <div class="formula-section formula-section-function"></div>
+          <div class="formula-section">
+            <label class="formula-btn file_btn">
+              <span class="material-icons">add_photo_alternate</span>
+              <input class="file_input js_convertToFormula_pic" type="file" accept="image/png, image/jpeg">
+            </label>
+          </div>
+        </div>
+        <div class="ip_forms ip_forms--shrink">
+          <p class="ip_forms-l_head">▼ここに入力して下さい。</p>
+          <textarea name="text" class="mathForm_input post-textarea" placeholder="返信を入力">
+            この理論によれば，エネルギー $E$ と質量 $m$ は$$E = mc^{2}$$である。
+                        </textarea>
+          <p class="ip_forms-r_head">▼ここにプレビューが表示されます。</p>
+          <div class="mathForm_box post-textarea post-preview">
+            <p class="mathForm_output"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <p>
+    数式を記述する場所を指定するために記号で囲む必要があります。
+    まず文中に数式を埋め込むタイプのインライン数式です。
+    これは\$ \$や<code>\( \)</code>で数式を囲んで扱います。
+    上の例を見ると文中に表示されていることがわかります。
+    次に数式が独立した行におかれるディスプレイ数式です。
+    これは\$\$ \$\$や<code>\[ \]</code>で数式を囲みます。
+    同じように例をみると別の行で表示されています。
+    テキストエリアの書き方と別の方法で試すのもいいでしょう。
+  </p>
+
+  <h2>基本コマンド</h2>
+  <p>
+    mathjaxでは多くの数式コマンドに対応しています。これを上のインライン数式などの中に
+    記述することで正しく表示することが出来ます。しっかり中に書かなければ読み込まれないので
+    注意してください。では試しに分数を表示する方法を説明します。
+  </p>
+
+  <section class="l-post">
+    <p class="ermsg"></p>
+    <div class="l-right_post_box">
+      {% csrf_token %}
+      <div class="mathForm" data-json='{"post_url": "/writeQ/"}'>
+        <div class="mathForm_btns">
+          <div class="formula-section formula-section-special"></div>
+          <div class="formula-section formula-section-symbol"></div>
+          <div class="formula-section formula-section-function"></div>
+          <div class="formula-section">
+            <label class="formula-btn file_btn">
+              <span class="material-icons">add_photo_alternate</span>
+              <input class="file_input js_convertToFormula_pic" type="file" accept="image/png, image/jpeg">
+            </label>
+          </div>
+        </div>
+        <div class="ip_forms ip_forms--shrink">
+          <p class="ip_forms-l_head">▼ここに入力して下さい。</p>
+          <textarea name="text" class="mathForm_input post-textarea" placeholder="返信を入力">
+            $$\frac{x}{x+1}$$
+                        </textarea>
+          <p class="ip_forms-r_head">▼ここにプレビューが表示されます。</p>
+          <div class="mathForm_box post-textarea post-preview">
+            <p class="mathForm_output"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <p>
+    分数のコマンドは\frac{a}{b}でaが分子、bが分母です。{}は数学における()のようなものでひとつのまとまりを表しています。
+    これをディスプレイ数式で表示するならば
+    \$\$ \$\$または<code>\[ \]</code>の中に記述します。簡単ですね。
+    他にも様々なコマンドが用意されていますが、基本的な考え方は同じです。
+    またマスネットには主要なコマンドを入力するボタンが用意されています。しかし他にも沢山あるので一覧が載っているサイトを紹介します。<br>
+    <br>
+    <a href="https://easy-copy-mathjax.nakaken88.com/">Easy Copy MathJax</a>
+  </p>
+
+  <h2>複数行での数式入力</h2>
+  <p>
+    インライン数式とディスプレイ数式は一行の数式にしか対応しておらず、複数行に渡る長い式を書くには別の手段が必要です。
+    その一つとしてalign環境があります。まずどのように表示されるのか見てみましょう。
+  </p>
+
+  <section class="l-post">
+    <p class="ermsg"></p>
+    <div class="l-right_post_box">
+      {% csrf_token %}
+      <div class="mathForm" data-json='{"post_url": "/writeQ/"}'>
+        <div class="mathForm_btns">
+          <div class="formula-section formula-section-special"></div>
+          <div class="formula-section formula-section-symbol"></div>
+          <div class="formula-section formula-section-function"></div>
+          <div class="formula-section">
+            <label class="formula-btn file_btn">
+              <span class="material-icons">add_photo_alternate</span>
+              <input class="file_input js_convertToFormula_pic" type="file" accept="image/png, image/jpeg">
+            </label>
+          </div>
+        </div>
+        <div class="ip_forms ip_forms--shrink">
+          <p class="ip_forms-l_head">▼ここに入力して下さい。</p>
+          <textarea name="text" class="mathForm_input post-textarea" placeholder="返信を入力">
+            \begin {align}
+            x +  5y &= 7 \\
+            11x + 13y &= 17
+            \end {align}
+                        
+                        </textarea>
+          <p class="ip_forms-r_head">▼ここにプレビューが表示されます。</p>
+          <div class="mathForm_box post-textarea post-preview">
+            <p class="mathForm_output"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <p>align環境は<code>\begin{align} \end{align}</code>でこの中に数式を入力していきます。
+    ポイントはどこで改行するか、どこで上下の数式を合わせるかの２つです。
+    改行するタイミングで \\\\を入力すると改行されます。次にどこで合わせるかを指定
+    する必要があります。揃えたい場所の前に&を置くことで配置を指定することが出来ます。
+    上の例では = で揃えていることがわかります。
+  </p>
+
+  <h2>最後に</h2>
+  <p>
+    これでチュートリアルは終了です。他にわからないことがあったらネットで調べると解決できるかもしれません。
+    まずは実際に質問や解答をして試してみましょう！
+  </p>
+</div>
+{% endblock main %}
+
+{% block js-end-load %}
+<script defer src="{% md5url 'js/mathForm.js' %}"></script>
+{% endblock %}

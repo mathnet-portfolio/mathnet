@@ -1,0 +1,244 @@
+{% load static %}
+{% load md5url %}
+<!DOCTYPE html>
+<html lang="ja">
+
+{% if request.path == '/' %}
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+  {% else %}
+
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+    {% endif %}
+    <script data-ad-client="ca-pub-2518715263291352" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-179039107-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'UA-179039107-1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1C5D7E">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:site_name" content="マスネット">
+    <meta property="og:image" content="https://mathnet.biz/static/img/sns-share-logo.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@mathnet8">
+    <meta name="google-site-verification" content="0JoNugADDaMVhF6vkzYFAPfarWBi4sR6G50ZN6IN8Cc" />
+    {% block level-head %}{% endblock %}
+    <title>マスネット | {% block tab-title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% md5url 'css/style.css' %}">
+    <link rel="icon" href="{% md5url 'img/favicon.ico' %}">
+    <link rel="stylesheet preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap">
+    <link rel="stylesheet preload" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.3.1/fuse.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    {% if request.get_host == 'mathnet.biz' %}
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    {% else %}
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    {% endif %}
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          processEscapes: true,
+          autoload: {
+            color: [],
+            colorV2: ['color']
+          },
+          packages: { '[+]': ['noerrors'] }
+        },
+        chtml: {
+          matchFontHeight: false,
+          displayAlign: "left",
+          displayIndent: "1em"
+        },
+        loader: {
+          load: ['[tex]/noerrors']
+        }
+      };
+    </script>
+    <script defer id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script defer src="{% md5url 'js/common.js' %}"></script>
+  </head>
+
+<body id="{% block body_id %}{% endblock %}" class="body  {% block body_class %}basic_body{% endblock %}">
+  {% block l-body %}
+  <header class="l-header header">
+    <div class="header-logo">
+      <a href="{% url 'mathQA:index' %}">
+        <img src="{% md5url 'img/header-logo.png' %}" alt="マスネットロゴ">
+      </a>
+    </div>
+    {% comment %} <input type="text" class="searchBox" placeholder="質問を検索">
+    <button class="searchBtn">
+      <span class="material-icons searchBox-icon">search</span>
+    </button> {% endcomment %}
+    <a class="goToQuestionBtn" href="{% url 'mathQA:writeQ' %}">
+      <span class="material-icons">create</span>
+      <span>質問する</span>
+    </a>
+    {% block header-right_space %}
+    {% if not user.is_authenticated %}
+    <a class="header-btn" href="{% url 'mathQA:login' %}">ログイン</a>
+    <a class="header-btn header-registerBtn" href="{% url 'mathQA:register' %}">新規登録</a>
+    {% else %}
+    <div class="header-icon">
+      <a href="{% url 'mathQA:user' %}"><img src="{{ MEDIA_URL }}{{ user.icon }}" alt="マイアイコン"></a>
+    </div>
+    {% endif %}
+    <div id="js-ham-btn" class="header-ham"><span id="js-ham-icon" class="material-icons">menu_open</span></div>
+    {% endblock header-right_space %}
+  </header>
+  <div class="l-header-Bg header-Bg"></div>
+
+  {% comment %} PC版で画面下に固定サれているやつ {% endcomment %}
+  {% block fixer %}
+  <div class="l-fixer fixer">
+    <p>
+      <a href="{% url 'mathQA:opinionaire' %}" target="new" rel="noopener">ご意見を<br>下さい。</a>
+    </p>
+  </div>
+  {% endblock fixer %}
+
+  {% comment %} モバイル版で画面下に固定されているやつ {% endcomment %}
+
+  {% block level-body_tag %}{% endblock %}
+
+  {% block nav %}
+  <div class="l-nav nav">
+    <nav class="">
+      <div class="nav-topic_path">
+        {% block nav-now %}{% endblock %}
+      </div>
+      <div class="nav-title_path">
+        <a href="{% url 'mathQA:index' %}"><span class="material-icons">home</span> ホーム</a>
+        <a href="{% url 'mathQA:writeQ' %}"><span class="material-icons">create</span> 質問する</a>
+        <a href="{% url 'mathQA:user' %}"><span class="material-icons">account_circle</span> マイアカウント</a>
+        <a href="{% url 'mathQA:adding_tag_request' %}"><span class="material-icons">tag</span> タグ追加希望</a>
+      </div>
+      <div class="account-box-sp">
+        {% if not user.is_authenticated %}
+        <a class="account-sp" href="{% url 'mathQA:login' %}">ログイン</a>
+        <a class="account-sp" href="{% url 'mathQA:register' %}">新規登録</a>
+        {% else %}
+        <div class="account-sp account-sp-img">
+          <a href="{% url 'mathQA:user' %}"><img src="{{ MEDIA_URL }}{{ user.icon }}" alt="マイアイコン"></a>
+        </div>
+        {% endif %}
+      </div>
+    </nav>
+  </div>
+  {% endblock nav %}
+
+  {% block l_sidebar %}
+  <div class="l-l_sidebar l_sidebar">
+    {% comment %} <div class="side_rank">
+      <div class="side_rank-title">
+        <p>回答数ランキング</p>
+      </div>
+      {% for user_ in userAnsCountRanking %}
+      <div class="side_rank-row">
+        <div class="row-user_icon"><img src="{{ MEDIA_URL }}{{ user_.icon }}" alt=""></div>
+        <div class="row-user_name">{{ user_.username }}</div>
+        <div class="row-ans_count">{{ user_.ansCountByUser }} 回</div>
+      </div>
+      {% endfor %}
+    </div> {% endcomment %}
+  </div>
+  {% endblock l_sidebar %}
+
+  <article class="l-main main">
+    {% block main %}{% endblock main %}
+  </article>
+
+  {% block r_sidebar %}
+  <article class="l-r_sidebar">
+    <section class="relation_questions">
+      <h2>未解決の疑問</h2>
+      <div class="relation_questions-list">
+        {% for unsolved in unsolveds %}
+        <div class="r_sidevar-question_link"><a href="{% url 'mathQA:detail' unsolved.id %}">{{ unsolved.title }}</a>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="relation_questions">
+      <h2>注目の疑問</h2>
+      <div class="relation_questions-list">
+        {% for attention in attentionRanking %}
+        <div class="r_sidevar-question_link"><a href="{% url 'mathQA:detail' attention.id %}">{{ attention.title }}</a>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="relation_questions">
+      <h2>閲覧数ランキング</h2>
+      <div class="relation_questions-list">
+        {% for pv in pvRanking %}
+        <div class="r_sidevar-question_link"><a href="{% url 'mathQA:detail' pv.id %}">{{ pv.title }}</a></div>
+        {% endfor %}
+      </div>
+    </section>
+  </article>
+  {% endblock r_sidebar %}
+
+  {% block footer %}
+  <footer class="l-footer footer">
+    <div class="l-footer-body footer-body">
+      <div class="footer-section">
+        <img src="{% md5url 'img/header-logo.png' %}" alt="マスネットロゴ">
+        <p>数学のためのQ&Aサイト</p>
+      </div>
+      <a class="footer-privacy_policy" href="{% url 'mathQA:privacy_policy' %}">プライバシーポリシー</a>
+      <p class="footer-text">お問い合わせ：mathnet.jp@gmail.com</p>
+      <p class="footer-text">&copy; 2020 h-kawa, k-saki</p>
+    </div>
+  </footer>
+  {% endblock footer %}
+
+  {% block footbar %}
+  <div class="l-footbar footbar">
+    <div class="footbar-menu {% if request.path == '/' %}footbar-menu--selected{% endif %}">
+      <a href="{% url 'mathQA:index' %}">
+        <div class="footbar-icon"><span class="material-icons">home</span></div>
+        <div class="footbar-text">ホーム</div>
+      </a>
+    </div>
+    <div class="footbar-menu {% if request.path == '/writeQ/' %}footbar-menu--selected{% endif %}">
+      <a href="{% url 'mathQA:writeQ' %}">
+        <div class="footbar-icon"><span class="material-icons">create</span></div>
+        <div class="footbar-text">質問</div>
+      </a>
+    </div>
+    <div class="footbar-menu {% if request.path == '/opinionaire/' %}footbar-menu--selected{% endif %}">
+      <a href="{% url 'mathQA:opinionaire' %}">
+        <div class="footbar-icon"><span class="material-icons">message</span></div>
+        <div class="footbar-text">アドバイス</div>
+      </a>
+    </div>
+    {% if user.is_authenticated %}
+    <div class="footbar-menu {% if request.path == '/user/' %}footbar-menu--selected{% endif %}">
+      <a href="{% url 'mathQA:user' %}">
+        <div class="footbar-icon footbar-icon-user_icon"><img src="{{ MEDIA_URL }}{{ user.icon }}" alt="マイアイコン"></div>
+        <div class="footbar-text">マイアカウント</div>
+      </a>
+    </div>
+    {% endif %}
+  </div>
+  {% endblock footbar %}
+
+  {% endblock l-body %}
+
+  {% block js-end-load %}{% endblock %}
+
+</body>
+
+</html>

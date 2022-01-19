@@ -1,0 +1,66 @@
+{% extends "mathQA/layouts/base.html" %}
+{% load static %}
+{% load md5url %}
+
+{% block tab-title %}タグの追加要望{% endblock %}
+
+{% block nav-now %}
+<a href="{% url 'mathQA:index' %}">ホーム</a> >
+<a href="{% url 'mathQA:adding_tag_request' %}">タグの追加要望</a>
+{% endblock %}
+
+{% block main %}
+<div class="basic_main">
+  <h1>タグの追加要望</h1>
+  <p>
+    追加したいタグを入力してください。右下の【上記のタグ追加を要望】を押すことで要望が送信されます。<br>
+    数学の範囲は広大であり、常にみなさんのご要望をお待ちしております。<br>
+    ※すでに似たようなタグがある、などの場合はタグが追加されない可能性があります。<br>
+    ※タグの追加要望はすぐには反映されません。ご理解ください。
+  </p>
+  <h2>どんなタグを要望すればいいの？</h2>
+  <p>どんなタグでも構いません。「線形代数」などの分野名や、「ロピタルの定理」などの定理名など、幅広いタグを募集しております。</p>
+  <h2>タグの追加要望はこちらより</h2>
+  <p>一つの欄につき一つのタグを入力してください。</p>
+  <p><span class="material-icons">add</span>を押すと欄が増えます。<br>
+    <span class="material-icons">delete</span>を押すとその欄が削除されます。</p>
+  <div id="adding_tag_request">
+    <template v-if="isShown">
+      <div class="basic_form">
+        <template v-for="(tag, i) in tags">
+          <div class="basic_form-row">
+            <p>[[ tag ]]</p>
+            <span @click="delTag(i)" class="material-icons basic_form-row-del_item_btn">delete</span>
+          </div>
+        </template>
+        <div class="basic_form-row">
+          <input v-model="newTag" @keydown.enter="addTag" type="text" class="basic_form-row-input"
+            placeholder="追加したいタグを一つ入力">
+          <span @click="addTag" class="material-icons basic_form-row-add_item_btn">add</span>
+        </div>
+      </div>
+      <button @click="send()" class="post_btn normal_btn" type="button">上記のタグ追加を要望</button>
+      <div class="form-error post_form-error">
+        <p>[[ errorMsg ]]&nbsp;</p>
+      </div>
+    </template>
+    <transition name="fade">
+      <div v-if="!isShown" class="adding_tag_request-result">
+        <p>[[ msg ]]</p><br>
+        <a href="{% url 'mathQA:adding_tag_request' %}">もう一度行う</a>
+      </div>
+    </transition>
+  </div>
+</div>
+{% endblock main %}
+
+{% block r_sidebar %}
+{% endblock r_sidebar %}
+
+{% block l_sidebar %}
+{% endblock l_sidebar %}
+
+
+{% block js-end-load %}
+<script defer src="{% md5url 'js/adding_tag_request.js' %}"></script>
+{% endblock %}

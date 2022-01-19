@@ -1,0 +1,140 @@
+.header {
+  background-color: $color-dark-blue;
+}
+
+.header-logo {
+  width: 2rem * 3.5;
+  height: 2rem;
+  margin-left: 2rem;
+  margin-right: auto;
+  @include mq('sp') {
+    margin-left: 1rem;
+    width: 1.5rem * 3.5;
+    height: 1.5rem;
+  }
+  img {
+    height: 100%;
+  }
+}
+
+.searchBox {
+  width: 20rem;
+  height: 2rem;
+  padding: .5rem;
+  background-color: $color-white;
+  border-radius: 2px;
+  @include mq('tab') {
+    width: 15rem;
+  }
+  @include mq('sp') {
+    display: none;
+  }
+}
+
+.searchBtn {
+  @include center;
+  width: 2rem * 2.414;
+  height: 2rem;
+  margin-left: .5rem;
+  border-radius: 2px;
+  background-color: $color-light-blue;
+  // transition: opacity 0.3s;
+  &:hover {
+    opacity: .7;
+  }
+  &:active {
+    opacity: 1;
+    background-color: $color-orange;
+  }
+  @include mq('sp') {
+    display: none;
+  }
+}
+
+.searchBox-icon {
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: $color-white;
+}
+
+.goToQuestionBtn {
+  @include btn-link;
+  height: 2rem;
+  line-height: 1.8rem;
+  padding: 0 .5rem;
+  background-color: $color-orange;
+  margin-left: 2rem;
+
+  // transition: opacity 0.3s;
+  &:link {
+    color: $color-white;
+  }
+  &:visited {
+    color: $color-white;
+  }
+  &:hover {
+    opacity: .7;
+  }
+  &:active {
+    opacity: 1;
+    background-color: $color-light-blue;
+  }
+  @include mq('sp') {
+    display: none;
+  }
+}
+
+.header-btn {
+  @include btn-link;
+  margin-left: 1rem;
+  &:link {
+    color: $color-white;
+  }
+  &:visited {
+    color: $color-white;
+  }
+  @include mq('tab') {
+    display: none;
+  }
+}
+
+.header-registerBtn {
+  margin-right: 2rem;
+}
+
+.header-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  @include mq('tab') {
+    display: none;
+  }
+}
+
+.header-icon img {
+  width: 100%;
+  height: 100%;
+  border-radius: 100vw;
+}
+
+.header-ham {
+  @include mq('pc') {
+    display: none;
+  }
+  display: block;
+  width: 2rem;
+  flex-shrink: 0;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  cursor: pointer;
+  span {
+    font-size: 2rem;
+    color: $color-white;
+    user-select: none;
+  }
+  @include mq('sp') {
+    margin: 0 1rem 0 1rem;
+  }
+}

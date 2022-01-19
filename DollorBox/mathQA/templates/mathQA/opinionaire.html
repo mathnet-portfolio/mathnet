@@ -1,0 +1,32 @@
+{% extends "mathQA/layouts/base.html" %}
+{% load static %}
+{% load md5url %}
+
+{% block tab-title %}ご意見・ご要望{% endblock %}
+
+{% block nav-now %}
+<a href="{% url 'mathQA:index' %}">ホーム</a> >
+<a href="{% url 'mathQA:opinionaire' %}">ご意見・ご要望</a>
+{% endblock %}
+
+{% block main %}
+<div class="basic_main">
+  <h1>ご意見・ご要望</h1>
+  <p>アドバイスを下さい(*´∀｀)</p>
+
+  <iframe
+    src="https://docs.google.com/forms/d/e/1FAIpQLSdtEGci4AXyhiw0vKE8WC-4RCDRxK23g3yEB-UbMplVuoS34Q/viewform?embedded=true"
+    width="100%%" height="991" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
+
+  <p>ご回答ありがとうございました。これからもマスネットをよろしくお願いいたします。</p>
+</div>
+{% endblock main %}
+
+{% block r_sidebar %}
+{% endblock r_sidebar %}
+
+{% block l_sidebar %}
+{% endblock l_sidebar %}
+
+{% block js-end-load %}
+{% endblock %}

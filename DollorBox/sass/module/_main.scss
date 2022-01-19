@@ -1,0 +1,1133 @@
+// 全ページで広く使える共通部位
+.normal_btn {
+  padding: 0.5rem;
+  border-radius: 5px;
+  color: $color-white;
+  background-color: rgba($color: $color-light-blue, $alpha: 0.8);
+}
+
+.normal_btn:hover {
+  background-color: $color-dark-blue;
+}
+
+.normal_btn:active {
+  background-color: $color-orange;
+}
+
+.file_input {
+  display: none;
+}
+
+.file_btn {
+  font-size: 0.7rem;
+}
+
+// トグル
+
+$toggle-background-color-on: $color-light-blue;
+$toggle-background-color-off: $color-dark-gray;
+$toggle-control-color: white;
+$toggle-width: 2rem;
+$toggle-height: 1rem;
+$toggle-gutter: 0.2rem;
+$toggle-radius: 50%;
+$toggle-control-speed: 0.15s;
+$toggle-control-ease: ease-in;
+$toggle-radius: $toggle-height / 2;
+$toggle-control-size: $toggle-height - ($toggle-gutter * 2);
+
+.toggle {
+  display: block;
+  position: relative;
+  padding-left: $toggle-width;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  user-select: none;
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  input:checked ~ &-control {
+    background-color: $toggle-background-color-on;
+    &:after {
+      left: $toggle-width - $toggle-control-size - $toggle-gutter;
+    }
+  }
+  &-control {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: $toggle-height;
+    width: $toggle-width;
+    border-radius: $toggle-radius;
+    background-color: $toggle-background-color-off;
+    transition: background-color $toggle-control-speed $toggle-control-ease;
+    &:after {
+      content: "";
+      position: absolute;
+      left: $toggle-gutter;
+      top: $toggle-gutter;
+      width: $toggle-control-size;
+      height: $toggle-control-size;
+      border-radius: $toggle-radius;
+      background: $toggle-control-color;
+      transition: left $toggle-control-speed $toggle-control-ease;
+    }
+  }
+}
+
+// 数式
+.mathForm-title {
+  display: flex;
+  label {
+    margin-left: 1rem;
+  }
+  @include mq("sp") {
+    display: none;
+  }
+}
+
+.mathForm-toggle_lead {
+  margin-left: 1rem;
+}
+
+@keyframes hide {
+  0% {
+    position: static;
+    opacity: 1;
+    top: 10rem;
+  }
+  50% {
+    top: 6rem;
+    opacity: 0;
+  }
+  100% {
+    position: fixed;
+    top: 4rem;
+    opacity: 1;
+  }
+}
+
+.mathForm_btns {
+  &--fixed {
+    z-index: 90;
+    top: 4rem;
+    margin: auto;
+    background-color: $color-white;
+    box-shadow: 1px 1px 2px #ccc;
+    animation: hide 1s ease-out 0s;
+    animation-fill-mode: forwards;
+  }
+  display: flex;
+  justify-content: start;
+  background-color: #fff;
+  @include mq("sp") {
+    display: none;
+  }
+  &--mobile {
+    display: none;
+    @include mq("sp") {
+      display: block;
+    }
+  }
+}
+
+.formula-section {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0.5em 0;
+}
+
+.formula-btn {
+  display: block;
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+  margin: 0.2rem;
+  border: 1px solid $color-light-gray;
+  .MathJax {
+    @include center;
+    width: 100%;
+    height: 100%;
+    font-size: 1.3em;
+  }
+  &:hover {
+    border-color: #c7c7c7;
+    background-color: #c7c7c7;
+  }
+  &:active {
+    border-color: $color-light-blue;
+    background-color: $color-light-blue;
+  }
+  &-special {
+    text-align: center;
+    line-height: 2rem;
+    width: 5rem;
+    height: 2rem;
+  }
+  &-symbol {
+    width: 2rem;
+    height: 2rem;
+  }
+  &-function {
+    width: 4rem;
+    height: 4rem;
+  }
+  // 画像アップロード
+  .material-icons {
+    @include center;
+  }
+}
+
+.formula-btn-special {
+  position: relative;
+  .formula-submenu {
+    display: none;
+    position: absolute;
+    padding: 5px;
+    top: 2rem;
+    left: -5px;
+    z-index: 10;
+    background-color: #fff;
+    box-shadow: 2px 2px 5px 1px #ccc;
+  }
+  &:hover .formula-submenu {
+    display: flex;
+  }
+  cursor: pointer;
+}
+
+.formula-btn-symbol {
+  position: relative;
+  .formula-submenu {
+    display: none;
+    position: absolute;
+    padding: 5px;
+    top: 2rem;
+    left: -5px;
+    z-index: 10;
+    background-color: #fff;
+    box-shadow: 2px 2px 5px 1px #ccc;
+  }
+  &:hover .formula-submenu {
+    display: flex;
+  }
+  cursor: pointer;
+}
+
+.formula-btn-function {
+  position: relative;
+  .formula-submenu {
+    display: none;
+    position: absolute;
+    padding: 10px;
+    top: 4rem;
+    left: -10px;
+    z-index: 10;
+    background-color: #fff;
+    box-shadow: 2px 2px 5px 1px #ccc;
+  }
+  &:hover .formula-submenu {
+    display: flex;
+  }
+  cursor: pointer;
+}
+
+.ip_forms {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "header1 header2"
+    "input output";
+  row-gap: 1rem;
+  &-l_head {
+    grid-area: header1;
+    font-size: 0.8rem;
+    color: $color-dark-gray;
+  }
+  &-r_head {
+    grid-area: header2;
+    font-size: 0.8rem;
+    color: $color-dark-gray;
+  }
+  .mathForm_input {
+    grid-area: input;
+    height: 10rem;
+  }
+  .mathForm_output {
+    grid-area: output;
+  }
+  &--shrink {
+    grid-template-columns: auto;
+    grid-template-rows: 1rem auto 1rem auto;
+    grid-template-areas:
+      "header1"
+      "input"
+      "header2"
+      "output";
+  }
+  @include mq("sp") {
+    row-gap: 0;
+    display: flex;
+    flex-wrap: wrap;
+    .ip_forms-l_head,
+    .ip_forms-r_head {
+      display: none;
+    }
+    .tab-content {
+      width: 100%;
+      display: none;
+    }
+  }
+}
+
+.tab-label {
+  display: none;
+  order: -1;
+  color: $color-white;
+  background: $color-light-gray;
+  margin-right: 5px;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem 0.3rem 0 0;
+  cursor: pointer;
+  @include mq("sp") {
+    display: inline;
+  }
+  .material-icons {
+    padding-right: 0.5rem;
+  }
+}
+
+// アクティブなタブ
+.tab-switch:checked + .tab-label {
+  background: $color-light-blue;
+}
+.tab-switch:checked + .tab-label + .tab-content {
+  display: block;
+}
+// ラジオボタン非表示
+.tab-switch {
+  display: none;
+}
+
+.mathForm_output {
+  line-height: 1.5;
+}
+
+// ポップ
+.popBg {
+  display: none;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+}
+
+.pop {
+  position: relative;
+  padding: 4rem;
+  border-radius: 1rem;
+  background-color: $color-white;
+}
+
+.close_btn {
+  color: $color-black;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.pop-title {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.pop-body {
+  line-height: 1.5;
+}
+
+.pop-conf_btn {
+  margin-top: 1rem;
+}
+
+//////////////////
+// row
+//////////////////
+
+.row-user_icon {
+  width: 1rem;
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 100vw;
+  }
+}
+
+.row-user_name {
+  width: 50%;
+  font-size: 0.7rem;
+}
+
+.row-ans_count {
+  width: 20%;
+}
+
+// 投稿
+
+.post-title {
+  margin-bottom: 2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid $color-black;
+}
+
+.post-content {
+  position: relative;
+  margin-top: 1rem;
+  line-height: 1.7;
+}
+
+.post-content img {
+  max-width: 100%;
+}
+
+.post-status {
+  display: inline-block;
+}
+
+.post-ans_num {
+  display: inline-block;
+}
+
+.post-footer {
+  width: 100%;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  @include mq("tab") {
+    display: grid;
+    grid-template:
+      "post_info   poster_icon"
+      "poster_name poster_icon"
+      "other       other"
+      / 1fr 4rem;
+  }
+}
+
+.post-footer-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.post-footer-writeQ_wrap {
+  grid-area: other;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  margin-right: auto;
+}
+
+.post-footer-wrap:nth-last-of-type(3) {
+  grid-area: post_info;
+}
+.post-footer-wrap:nth-last-of-type(2) {
+  grid-area: poster_name;
+  text-align: right;
+}
+.post-footer-wrap:nth-last-of-type(1) {
+  grid-area: poster_icon;
+}
+
+.post-footer-item {
+  @include center;
+  flex-shrink: 0;
+  margin-left: 1rem;
+  font-size: 0.8rem;
+  @include mq("sp") {
+    margin-top: 1rem;
+  }
+  .material-icons {
+    font-size: 1.2rem;
+    color: $color-light-blue;
+  }
+}
+
+.good_btn {
+  display: block;
+  height: 2rem;
+  padding: 0 0.5rem;
+  font-size: 0.5rem;
+  span {
+    font-size: 0.8rem;
+    margin-right: 0.2rem;
+  }
+}
+
+.post-footer-balloon {
+  $c: rgba(
+    $color: $color-dark-gray,
+    $alpha: 0.3,
+  );
+  position: relative;
+  margin-right: auto;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.7rem;
+  background: $c;
+  &::before {
+    $w: 7px;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -($w * 2);
+    margin-top: -$w;
+    border: $w solid transparent;
+    border-right: $w solid $c;
+  }
+  @include mq("sp") {
+    margin-right: 1rem;
+  }
+}
+
+.post-poster_icon {
+  width: 3rem;
+  height: 3rem;
+  @include mq("sp") {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.post-poster_icon > img {
+  width: 100%;
+  height: 100%;
+  border-radius: 100vw;
+}
+
+// タグ
+.tag {
+  width: 100%;
+  padding: 0.5rem 0;
+  display: flex;
+  font-size: 0.8rem;
+}
+
+.tag-title {
+  @include center;
+  p {
+    @include center;
+    font-size: 0.8rem;
+    .material-icons {
+      color: $color-light-blue;
+    }
+  }
+  margin-right: 0.5rem;
+}
+
+.tag-list {
+  display: flex;
+  align-items: center;
+  p {
+    margin-right: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 0.2rem;
+    background-color: $color-light-blue;
+    color: $color-white;
+    cursor: default;
+  }
+}
+
+.tag-item {
+  position: relative;
+  &-del {
+    position: absolute;
+    top: -0.5rem;
+    right: 0rem;
+    cursor: pointer;
+    .material-icons {
+      color: $color-orange;
+    }
+  }
+}
+
+.tag-add_list {
+  visibility: hidden;
+  margin-right: 0.5rem;
+  padding: 0.3rem;
+  border-radius: 0.2rem;
+  border: 1px dotted $color-light-gray;
+  color: $color-dark-gray;
+  cursor: pointer;
+}
+
+.tag-auto_correct {
+  @include center;
+  justify-content: flex-start;
+  position: relative;
+  flex-wrap: wrap;
+  p {
+    font-size: 0.8rem;
+  }
+  a {
+    display: block;
+    margin-left: auto;
+    font-size: 0.8rem;
+  }
+}
+
+.tag-auto_correct-input {
+  padding: 0.5rem;
+  border: 1px solid $color-light-gray;
+  border-radius: 0.2rem;
+  margin-left: 0.5rem;
+}
+
+.tag-auto_correct-output {
+  z-index: 50;
+  display: none;
+  position: absolute;
+  top: 1.5rem;
+  left: 12rem * 0.8;
+  padding: 0.5rem;
+  background-color: #fff;
+  box-shadow: 1px 1px 2px 0px #ccc;
+  .matchTags:hover {
+    background-color: #ccc;
+  }
+}
+
+.ans-textarea {
+  width: 100%;
+  min-height: 5rem;
+}
+
+.question-title {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 1rem;
+  color: $color-black;
+}
+
+.post-textarea {
+  width: 100%;
+  min-height: 5rem;
+  height: auto;
+  overflow-y: scroll;
+  &--writeQ {
+    min-height: 30vh;
+  }
+}
+
+.post-preview {
+  width: 100%;
+  min-height: 5rem;
+  border: 1px solid #555;
+  padding: 1rem;
+}
+
+.post-preview p {
+  overflow-wrap: anywhere;
+}
+
+.post-preview img {
+  max-width: 100%;
+}
+
+.post_form-error {
+  width: 100%;
+}
+
+.post_form-error > p {
+  text-align: right;
+}
+
+.post_btn {
+  display: block;
+  margin-top: 1rem;
+  margin-left: auto;
+}
+
+.ans-post {
+  margin-top: 3rem;
+}
+
+.ans-post-left {
+  border-top: 1px solid $color-black;
+}
+
+.reply-box {
+  padding-top: 1rem;
+  border-top: 1px solid $color-light-gray;
+}
+
+.reply-textarea {
+  margin-left: 1rem;
+  width: 100%;
+}
+
+.reply-post-footer p {
+  font-size: 0.8rem;
+}
+
+.reply-post-footer p {
+  font-size: 0.8rem;
+}
+
+.reply-post-footer .post-poster_icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+// 数式簡単ガイド
+.q_guide {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+  @include mq("tab") {
+    display: block;
+  }
+}
+
+.q_guide-section {
+  width: 33%;
+  img {
+    width: 100%;
+  }
+  @include mq("tab") {
+    width: 100%;
+  }
+}
+
+// 検索一覧など
+
+.q-list {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid $color-light-gray;
+  margin-bottom: 2rem;
+  @include mq("sp") {
+    padding: 0;
+  }
+}
+
+.list-title {
+  font-size: 1.5rem;
+}
+
+.list-title > a {
+  color: $color-light-blue;
+}
+
+.list-title > a:hover {
+  text-decoration-line: underline;
+}
+
+.list-tag {
+  margin-top: .5rem;
+}
+
+.list-tag-item {
+  padding: 0.35rem;
+  border-radius: 0.2rem;
+  font-size: 0.8rem;
+  &:link,
+  &:visited {
+    color: $color-light-blue;
+  }
+  .material-icons {
+    margin-right: .2rem;
+    font-size: 1.3rem;
+  }
+}
+
+.list-content {
+  position: relative;
+  margin-top: 0.5rem;
+  line-height: 1.5;
+  max-height: 5rem;
+  overflow: hidden;
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3rem;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff);
+  }
+}
+
+.list-link {
+  display: inline-block;
+  padding: .4rem;
+  font-size: .8rem;
+  border: 1px solid $color-light-blue;
+  border-radius: .5rem;
+  margin-top: 1rem;
+  &:hover .material-icons{
+    transition: margin-left .3s ease-in-out;
+    margin-left: 1rem;
+  }
+}
+
+.list-q_stat {
+  @include center;
+  padding: 0.5rem;
+  background-color: $color-dark-gray;
+  &--solved {
+    background-color: $color-light-blue;
+  }
+}
+
+.list-q_stat > p {
+  color: $color-white;
+}
+
+// 設定
+
+.setting-wrapper {
+  display: flex;
+  margin-top: 2rem;
+  @include mq("tab") {
+    display: block;
+  }
+}
+
+.setting-menus {
+  @include mq("tab") {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+}
+
+.setting-menu {
+  padding-left: 0;
+  &--selected {
+    padding-left: 0.5rem;
+    transition: 0.2s ease-out;
+    border-left: 0.5rem solid $color-light-blue;
+    @include mq("tab") {
+      padding-left: 0;
+      border-left: none;
+      padding-bottom: 0.2rem;
+      border-bottom: 0.2rem solid $color-light-blue;
+    }
+  }
+}
+
+.setting-menu-btn {
+  display: block;
+  margin-bottom: 1rem;
+  @include mq("tab") {
+    margin-bottom: 0;
+  }
+}
+
+.setting-menu-btn:hover {
+  text-decoration-line: underline;
+}
+
+.setting-row {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid $color-light-gray;
+  @include mq("sp") {
+    flex-wrap: wrap;
+  }
+  &--email {
+    // flex-direction: column;
+  }
+}
+
+.setting-alert {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: -1.5rem;
+  left: 0;
+  width: 100%;
+  color: $color-orange;
+  p {
+    font-size: 0.7rem;
+  }
+  span {
+    display: block;
+  }
+}
+
+.setting-item {
+  flex: 0 0 10rem;
+  padding: 1rem 0;
+}
+
+.setting-value {
+  text-align: left;
+  flex: 1 1 auto;
+  @include mq("tab") {
+    // width: 80%;
+    // margin-top: .5rem;
+  }
+}
+
+.setting-value-img {
+  width: 3rem;
+  height: 3rem;
+  margin-right: auto;
+}
+
+.setting-value-img img {
+  height: 100%;
+  border-radius: 100vw;
+}
+
+.setting-wrp_edit-btn {
+  @include mq("tab") {
+    margin-left: auto;
+  }
+}
+
+.setting-edit-btn {
+  margin-left: 1rem;
+}
+
+.resend-email {
+  @include mq("tab") {
+    margin-left: auto;
+  }
+}
+
+.setting-my_post {
+  width: 100%;
+  // margin: .5rem;
+  // padding: .5rem;
+  a {
+    display: block;
+    width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.pop-label {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.pop-text_form {
+  display: block;
+  width: 15rem;
+  padding: 0.5rem;
+  border-radius: 0.2rem;
+}
+
+.pop-new_text_form {
+  margin-bottom: 1rem;
+  border: 1px solid $color-light-gray;
+}
+
+.pop-edit_btn {
+  display: block;
+  margin-top: 1rem;
+}
+
+.pop-icon_edit {
+  display: none;
+  text-align: center;
+}
+
+.form-error {
+  margin-top: 0.5rem;
+}
+
+.form-error > p {
+  color: $color-orange;
+  font-size: 0.7rem;
+}
+
+.nologined_covered {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  padding: 1rem;
+  flex-direction: column;
+  border: 1px solid $color-light-gray;
+  border-radius: 0.5rem;
+  p {
+    display: block;
+  }
+  a {
+    color: $color-white;
+    display: block;
+    margin-top: 1rem;
+  }
+}
+
+.form-top-guide {
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.select_bestans {
+  margin-top: 1rem;
+  text-align: right;
+}
+
+.bestans {
+  display: inline-block;
+  position: absolute;
+  // z-index: 50;
+  right: 0;
+  width: 10rem;
+  transform: rotate(-15deg);
+  opacity: 0.5;
+  img {
+    width: 100%;
+  }
+}
+
+// 利用規約など
+
+.formal_document {
+  line-height: 1.7;
+  h2 {
+    margin: 1rem 0;
+  }
+  > ol {
+    padding-left: 2rem;
+  }
+  > ol > li {
+    list-style-type: decimal;
+  }
+  > ol > li > ol {
+    padding-left: 2rem;
+  }
+  > ol > li > ol > li {
+    list-style-type: lower-roman;
+  }
+  > ol > li > ol > li > ol {
+    padding-left: 2rem;
+  }
+  > ol > li > ol > li > ol > li {
+    list-style-type: lower-greek;
+  }
+}
+
+// チュートリアルなど
+
+.basic_main {
+  h1 {
+    margin: 1rem 0;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    position: relative;
+    margin: 2rem 0;
+    padding: 1rem;
+    color: $color-white;
+    background-color: $color-dark-blue;
+    &:after {
+      position: absolute;
+      content: "";
+      top: 100%;
+      left: 30px;
+      border: 15px solid transparent;
+      border-top: 15px solid $color-dark-blue;
+      width: 0;
+      height: 0;
+    }
+    > p {
+      margin-bottom: 1rem;
+    }
+    iframe {
+      width: 100%;
+    }
+  }
+
+  > p:not(.ip_forms-l_head):not(.ip_forms-r_head) {
+    margin-top: 1rem;
+    line-height: 1.7;
+  }
+}
+
+.range-box {
+  width: 2rem;
+  height: 2rem;
+  margin: 0 1rem;
+  border: 1px solid $color-light-gray;
+  display: block;
+  text-align: center;
+  line-height: 2rem;
+  color: $color-dark-gray;
+  &:link {
+    color: $color-dark-gray;
+  }
+  &:visited {
+    color: $color-dark-gray;
+  }
+  &:hover {
+    color: $color-white;
+    background-color: $color-light-blue;
+    border-color: $color-white;
+  }
+  &--now {
+    background-color: $color-dark-gray;
+    border-color: $color-light-gray;
+    &:link {
+      color: $color-white;
+    }
+    &:visited {
+      color: $color-white;
+    }
+  }
+}
+
+// タグの追加要望
+.basic_form {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: $color-white;
+  border-radius: 0.5rem;
+}
+
+.basic_form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 0;
+  p {
+    display: block;
+  }
+  .material-icons {
+    margin-left: 1rem;
+  }
+  .material-icons:active {
+    color: $color-light-blue;
+  }
+}
+
+.basic_form-row-input {
+  flex-grow: 1;
+  padding: 0.5rem;
+  background-color: #fff;
+}
+
+.adding_tag_request-result {
+  margin-top: 2rem;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  background-color: rgba($color: $color-light-blue, $alpha: 0.2);
+  font-size: 1rem;
+  text-align: center;
+}

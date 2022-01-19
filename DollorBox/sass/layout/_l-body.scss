@@ -1,0 +1,218 @@
+.body {
+  width: 100%;
+  min-height: 100%;
+}
+
+// 基本的な、左右サイドバーがあるタイプ
+.basic_body {
+  width: 100%;
+  min-height: 100%;
+  display: grid;
+  grid-template:
+    "header header header header header" 4rem
+    "...    ...    ...    ...    ...   " 2rem
+    "...    nav    main   r_side ...   " 13rem
+    "...    l_side main   r_side ...   " minmax(100vh, auto)
+    "footer footer footer footer footer" 
+   / 1fr 10rem  minmax(400px, 900px)  12rem 1fr;
+   gap: 0 2rem;
+   @include mq('tab') {
+    gap: 0 0;
+    grid-template:
+      "header header header" 4rem
+      "...    ...    ...   " 2rem
+      "...    main   ...   " minmax(100vh, auto)
+      "...    r_side ...   "
+      "...    l_side ...   "
+      "footer footer footer" 
+    /  1rem   1fr    1rem;
+  }
+  @include mq('sp') {
+    grid-template:
+      "header header header" 4rem
+      "...    ...    ...   " 2rem
+      "...    main   ...   " minmax(100vh, auto)
+      "...    r_side ...   "
+      "...    l_side ...   "
+      "footer footer footer" 
+    /  1rem    1fr   1rem;
+  }
+  // grid-itemは、デフォルトで
+  // min-width: auto
+  // min-height: auto
+  // が指定されているため。
+  // 参考 https://stackoverflow.com/questions/43311943/prevent-content-from-expanding-grid-items
+  > * {
+    min-width: 0;
+    min-height: 0;
+  }
+}
+
+// 左右サイドバーがないタイプ
+.no_side_bar_body {
+  display: grid;
+  grid-template:
+    "header header header" 4rem
+    "...    ...    ...   " 2rem
+    "...    main   ...   " minmax(100vh, auto)
+    "...    nav    ...   "
+    "footer footer footer" 
+  /  1rem   1fr 1rem;
+   gap: 0 2rem;
+   @include mq('tab') {
+    gap: 0 0;
+    grid-template:
+      "header header header" 4rem
+      "...    ...    ...   " 2rem
+      "...    main   ...   "
+      "...    nav  ...   "
+      "footer footer footer" 
+    /  1rem   1fr    1rem;
+  }
+  @include mq('sp') {
+    grid-template:
+      "header header header" 4rem
+      "...    ...    ...   " 2rem
+      "...    main   ...   "
+      "...    nav  ...   "
+      "footer footer footer" 
+    /  1rem    1fr   1rem;
+  }
+  > * {
+    min-width: 0;
+    min-height: 0;
+  }
+}
+
+// 
+
+.l-header {
+  @include center;  
+  position: fixed;
+  z-index: 150;
+  width: 100%;
+  height: 4rem;
+  @include mq('sp') {
+    height: 3rem;
+  }
+}
+
+.l-header-Bg {
+  grid-area: header;
+  width: 100%;
+  height: 4rem;
+  @include mq('sp') {
+    height: 3rem;
+  }
+}
+
+.l-nav {
+  grid-area: nav;
+  @include mq('tab') {
+    position: fixed;
+    z-index: 100;
+    top: -20rem;
+    left: 0;
+    background-color: $color-dark-blue;
+    width: 100%;
+    margin: 0;
+    padding: 2rem;
+    transition: .3s ease-out;
+    &--open {
+      top: 4rem;
+      @include mq('sp') {
+        top: 3rem;
+      }
+    }
+  }
+}
+
+.l-l_sidebar {
+  grid-area: l_side;
+  width: 100%;
+}
+
+.l-main {
+  grid-area: main;
+  @include mq('tab') {
+    width: 100%;
+  }
+  &--writeQ {
+    grid-area: main;
+    width: 100%;
+    // margin: auto;
+    // margin-top: 2rem;
+  }
+}
+
+.l-r_sidebar {
+  grid-area: r_side;
+  width: 100%;
+  @include mq('tab') {
+    display: flex;
+  }
+  @include mq('sp') {
+    display: block;
+  }
+}
+
+.relation_questions {
+  width: 100%;
+  @include mq('tab') {
+    width: calc(100% / 3);
+  }
+  @include mq('sp') {
+    width: 100%;
+  }
+}
+
+.l-fixer {
+  @include center;
+  position: fixed;
+  z-index: 200;
+  right: 2rem;
+  bottom: 2rem;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 100vw;
+  transition: width 0.5s, height 0.5s;
+  &:hover {
+    width: 6rem;
+    height: 6rem;
+    transition: width 0.3s, height 0.3s;
+  }
+  @include mq('tab') {
+    right: 1rem;
+    bottom: 1rem;
+    width: 4rem;
+    height: 4rem;
+    font-size: .5rem;
+  }
+}
+
+.l-footbar {
+  display: none;
+  @include mq('tab') {
+    display: flex
+  }
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 120;
+  width: 100%;
+}
+
+.l-footer {
+  grid-area: footer;
+  width: 100%;
+  margin-top: 5rem;
+}
+
+.l-footer-body {
+  max-width: 200px + 900px + 200px;
+  margin: auto;
+  padding: 2rem 2rem;
+  @include mq('tab') {
+    padding-bottom: 5rem;
+  }
+}

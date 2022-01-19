@@ -1,0 +1,103 @@
+{% extends "mathQA/layouts/base.html" %}
+{% load static %}
+{% load md5url %}
+
+
+{% block tab-title %}紹介ページ{% endblock %}
+{% block body_class %}lp_body{% endblock body_class %}
+
+
+{% block l-body %}
+<!-- ヘッダー -->
+<header class="l-header header">
+  <div class="header-logo">
+    <a href="{% url 'mathQA:index' %}">
+      <img src="{% md5url 'img/header-logo.png' %}" alt="マスネットロゴ">
+    </a>
+
+  </div>
+  {% comment %} <input type="text" class="searchBox" placeholder="質問を検索">
+  <button class="searchBtn">
+    <span class="material-icons searchBox-icon">search</span>
+  </button> {% endcomment %}
+  <a class="goToQuestionBtn" href="{% url 'mathQA:writeQ' %}">疑問を解決する</a>
+  {% block header-right_space %}
+  {% if not user.is_authenticated %}
+  <a class="header-btn" href="{% url 'mathQA:login' %}">ログイン</a>
+  <a class="header-btn header-registerBtn" href="{% url 'mathQA:register' %}">新規登録</a>
+  {% else %}
+  <div class="header-icon">
+    <a href="{% url 'mathQA:user' %}"><img src="{{ MEDIA_URL }}{{ user.icon }}" alt="マイアイコン"></a>
+  </div>
+  {% endif %}
+  <div id="js-ham-btn" class="header-ham"><span id="js-ham-icon" class="material-icons">menu_open</span></div>
+  {% endblock header-right_space %}
+</header>
+<div class="l-header-Bg header-Bg"></div>
+
+<!-- main -->
+<div class="lp-fullscreen">
+  <div class="lp-text">
+    <h1>マスネット</h1>
+    <p>数学の為のQ&Aサイト</p>
+    <h2>スムーズな疑問解決を</h2>
+  </div>
+</div>
+
+<div class="lp-main_explain">
+  <h2>マスネットとは</h2>
+  <p>
+    マスネットとは数学に特化したQ&Aサイトです。
+    数学を勉強している人達の疑問解決を全力でサポートしています。
+  </p>
+</div>
+
+<div class="lp-sub_explain">
+  <div class="lp-sub_explain-img"><img src="{% static 'img/LP-suusiki1.png' %}" alt="sample"></div>
+  <div class="lp-sub_explain-text">
+    <h2>美しい数式が利用できる</h2>
+    <p>
+      他のQ&Aサイトでは数式が独特な書き方なので見ずらい...マスネットならその問題を解決できます。
+      LaTeXに対応しており、普段と変わらず利用することが出来ます。
+    </p>
+  </div>
+</div>
+
+<div class="lp-sub_explain">
+  <div class="lp-sub_explain-text">
+    <h2>楽々ボタン入力</h2>
+    <p>
+      LaTeXの使い方を全く知らない方でも大丈夫。マスネットは簡単なチュートリアルを用意してあります。
+      また数式のボタン入力に対応しているので、細かい文法を覚える必要はありません。
+    </p>
+  </div>
+  <div class="lp-sub_explain-img"><img src="{% static 'img/LP-kaitou.png' %}" alt="sample"></div>
+</div>
+
+<div class="lp-link_to_login">
+  <h2>さぁさっそく質問をしてみよう！</h2>
+  <div>
+    <div class="lp-link_to_login-register">
+      <button onclick="location.href='/register/'">新規登録</button>
+    </div>
+    <div class="lp-link_to_login-login">
+      <button onclick="location.href='/login/'">ログイン</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- フッター -->
+<footer class="l-footer footer">
+  <div class="l-footer-body footer-body">
+    <div class="footer-section">
+      <img src="{% md5url 'img/header-logo.png' %}" alt="マスネットロゴ">
+      <p>数学のためのQ&Aサイト</p>
+    </div>
+    <a class="footer-privacy_policy" href="{% url 'mathQA:privacy_policy' %}">プライバシーポリシー</a>
+    <p class="footer-text">お問い合わせ：mathnet.jp@gmail.com</p>
+    <p class="footer-text">&copy; 2020 h-kawa, k-saki</p>
+  </div>
+</footer>
+
+{% endblock l-body %}

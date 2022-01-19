@@ -1,0 +1,380 @@
+{% extends "mathQA/layouts/base.html" %}
+{% load static %}
+{% load md5url %}
+
+{% block level-head %}
+<meta property="og:type" content="website">
+<meta property="og:title" content="マスネットで質問を投稿">
+<meta property="og:description" content="{{question.contents}}">
+{% endblock level-head %}
+
+{% block tab-title %}{{question.contents|truncatechars:10}}{% endblock %}
+
+{% block body_id %}detail{% endblock %}
+
+{% block nav-now %}
+<a href="{% url 'mathQA:index' %}">ホーム</a> >
+<a href="#">{{question.contents|truncatechars:10}}</a>
+{% endblock %}
+
+{% block main %}
+<section class="l-post">
+  <div class="l-left_post_box top-good"></div>
+  <div class="l-right_post_box">
+    <div class="post-status">
+      {% if question.bestAnswer %}
+      <p>解決済</p>
+      {% else %}
+      <p>未解決</p>
+      {% endif %}
+    </div>
+    <div class="post-ans_num">
+      <p>回答 {{answers|length}}</p>
+    </div>
+    <div class="list-tag">
+      {% for tag in question.tags.all %}
+      <a href="{% url 'mathQA:tagSearchResult' tag 1  %}" class="list-tag-item"><span
+          class="material-icons">tag</span>{{tag}}</a>
+      {% endfor %}
+    </div>
+    <div class="post-content">
+      <p class='question-contents markdown-contents'>{{question.title}}{{question.contents}}</p>
+    </div>
+    <div class="post-footer">
+      <div class="post-footer-writeQ_wrap">
+        {% if user.id in userIDsgood %}
+        <button
+          class="post-footer-item post-good pushed normal_btn good_btn"><span>{{question.goodinfo_set.all|length}}</span>
+          イイネ！</button>
+        {% else %}
+        <button class="post-footer-item post-good normal_btn good_btn"><span>{{question.goodinfo_set.all|length}}</span>
+          イイネ！</button>
+        {% endif %}
+        <div class="Twitter-share post-footer-item post-footer-twitter_share">
+          <a href="https://twitter.com/share?ref_src=twsrc%5Etfw&text=マスネット | {{question.contents|truncatechars:20}}%0a%23数学教えて%20%23数学質問%20%23数学%0a"
+            class="twitter-share-button" data-show-count="false" data-size="large" data-text="custom share text">
+            Tweet
+          </a>
+          <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+        <div class="post-footer-item post-footer-balloon">
+          <p>誰かが助けてくれるかも！？</p>
+        </div>
+      </div>
+      <div class="post-footer-wrap">
+        <div class="post-footer-item post-date">
+          <p>{{question.updated_at|date:"Y/m/d"}}</p>
+        </div>
+        <div class="post-footer-item psot-time">
+          <p>{{question.updated_at|date:"H:i"}}</p>
+        </div>
+      </div>
+      <div class="post-footer-wrap">
+        <div class="post-footer-item post-poster">
+          <p>{{question.customUser.username}}</p>
+        </div>
+      </div>
+      <div class="post-footer-wrap">
+        <div class="post-footer-item post-poster_icon"><img src="{{ MEDIA_URL }}{{ question.customUser.icon }}"
+            alt="投稿者アイコン"></div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+{% if not question.bestAnswer %}
+<section class="l-post l-ans-box">
+  <div class="l-left_post_box">
+    {% if status == 'logging' %}
+    <div class="post-poster_icon"><img src="{{MEDIA_URL}}{{user.icon}}" alt="投稿者アイコン"></div>
+    {% endif %}
+  </div>
+  <div class="l-right_post_box">
+    {% if status == 'logging' %}
+    {% csrf_token %}
+    <div class="mathForm" data-json='{"post_url": "/detail/{{questionID}}/", "method": "answer"}'>
+      <div class="mathForm-title">
+        <!-- <p>返信入力欄</p> -->
+        <label class="toggle">
+          <input type="checkbox" class="toggle-checkbox is_expanded_toggle">
+          <span class="toggle-control"></span>
+        </label>
+        <p class="mathForm-toggle_lead">回答欄を広げる</p>
+        <label class="toggle">
+          <input type="checkbox" class="toggle-checkbox is_fixed_toggle">
+          <span class="toggle-control"></span>
+        </label>
+        <p class="mathForm-toggle_lead">数式ボタンを固定</p>
+      </div>
+      <div class="mathForm_btns">
+        <div class="formula-section formula-section-special"></div>
+        <div class="formula-section formula-section-symbol"></div>
+        <div class="formula-section formula-section-function"></div>
+        <div class="formula-section">
+          <label class="formula-btn file_btn">
+            <span class="material-icons">add_photo_alternate</span>
+            <input class="file_input js_convertToFormula_pic" type="file" accept="image/png, image/jpeg">
+          </label>
+        </div>
+      </div>
+      <div class="mathForm_btns--mobile">
+        <p>※スマホ版での数式入力ボタンは未対応です。</p>
+        <label class="formula-btn file_btn">
+          <span class="material-icons">add_photo_alternate</span>
+          <input class="file_input js_convertToFormula_pic--mobile" type="file" accept="image/png, image/jpeg">
+        </label>
+      </div>
+
+      <div class="ip_forms ip_forms--shrink">
+        <p class="ip_forms-l_head">▼ここに回答を入力して下さい。</p>
+        <input id="textarea-TAB-01" type="radio" name="TAB" class="tab-switch" checked="checked" />
+        <label class="tab-label" for="textarea-TAB-01">入力欄</label>
+        <textarea name="text" class="mathForm_input post-textarea tab-content" placeholder="回答を入力">
+$ f(x) = y $
+$$ \displaystyle \sum_{i=1}^n a_n $$
+        </textarea>
+        <p class="ip_forms-r_head">▼ここにプレビューが表示されます。</p>
+        <input id="textarea-TAB-02" type="radio" name="TAB" class="tab-switch" />
+        <label class="tab-label" for="textarea-TAB-02">投稿プレビュー</label>
+        <div class="mathForm_box post-textarea post-preview tab-content">
+          <p class="mathForm_output"></p>
+        </div>
+      </div>
+
+
+      <button class="js-post_btn post_btn normal_btn" type="button">回答を投稿</button>
+      <div class="form-error post_form-error">
+        <p class="js-post_error">{% if error_message %}{{error_message}}{% endif %}&nbsp;</p>
+      </div>
+    </div>
+    {% elif status == 'guest' %}
+    <div class="nologined_covered">
+      <p>ログインをすると回答することができます。</p>
+      <a class="normal_btn" href="{% url 'mathQA:login' %}">ログイン画面へ</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
+
+{% for answer in answers %}
+<section class="l-post ans-post">
+  <div class="l-left_post_box"></div>
+  <div class="l-right_post_box ans-post-left">
+    <div class="post-content">
+      {% if answer.id == question.bestAnswer %}
+      <div class="bestans">
+        <img src="{% md5url 'img/bestans-icon.svg' %}" alt="ベストアンサーアイコン">
+      </div>
+      {% endif %}
+      <p class=" markdown-contents">
+        {{answer.contents}}
+      </p>
+    </div>
+    <div class="post-footer">
+      <div class="post-footer-wrap">
+        <div class="post-footer-item post-date">
+          <p>{{answer.updated_at|date:"Y/m/d"}}</p>
+        </div>
+        <div class="post-footer-item psot-time">
+          <p>{{answer.updated_at|date:"H:i"}}</p>
+        </div>
+      </div>
+      <div class="post-footer-wrap">
+        <div class="post-footer-item post-poster">
+          <p>{{answer.customUser.username}}</p>
+        </div>
+      </div>
+      <div class="post-footer-wrap">
+        <div class="post-footer-item post-poster_icon"><img src="{{MEDIA_URL}}{{answer.customUser.icon}}" alt="投稿者アイコン">
+        </div>
+      </div>
+    </div>
+    {% if not question.bestAnswer  and status == 'questioner' %}
+    <form class="select_bestans" action="{% url 'mathQA:bestans_post' questionID %}" method="POST">
+      {% csrf_token %}
+      <p class="form-top-guide">この方を...</p>
+      <input type="hidden" name="bestans" value="{{answer.id}}">
+      <button type="submit" class="normal_btn">ベストアンサーにする！</button>
+    </form>
+    {% endif %}
+    {% for reply in answer.reply_set.all %}
+    <div class="l-reply">
+      <div class="l-reply-box reply-box post-content">
+
+        <p class="markdown-contents">{{reply.contents}}</p>
+        <div class="post-footer reply-post-footer">
+          <div class="post-footer-wrap">
+            <div class="post-footer-item post-date">
+              <p>{{reply.updated_at|date:"Y/m/d"}}</p>
+            </div>
+            <div class="post-footer-item psot-time">
+              <p>{{reply.updated_at|date:"H:i"}}</p>
+            </div>
+          </div>
+          <div class="post-footer-wrap">
+            <div class="post-footer-item post-poster">
+              <p>{{reply.customUser.username}}</p>
+            </div>
+          </div>
+          <div class="post-footer-wrap">
+            <div class="post-footer-item post-poster_icon"><img src="{{MEDIA_URL}}{{reply.customUser.icon}}"
+                alt="投稿者アイコン">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    <div class="l-reply">
+      {% if status != 'guest' %}
+      <div class="mathForm l-reply-box reply-box"
+        data-json='{"post_url": "/detail/{{questionID}}/", "method": "reply", "answerID":"{{ answer.id }}"}'>
+        <div class="mathForm-title">
+          <p>返信入力欄</p>
+          <label class="toggle">
+            <input type="checkbox" class="toggle-checkbox is_expanded_toggle">
+            <span class="toggle-control"></span>
+          </label>
+          <p class="mathForm-toggle_lead">返信欄を広げる</p>
+          <label class="toggle">
+            <input type="checkbox" class="toggle-checkbox is_fixed_toggle">
+            <span class="toggle-control"></span>
+          </label>
+          <p class="mathForm-toggle_lead">数式ボタンを固定</p>
+        </div>
+        <div class="mathForm_btns">
+          <div class="formula-section formula-section-special"></div>
+          <div class="formula-section formula-section-symbol"></div>
+          <div class="formula-section formula-section-function"></div>
+          <div class="formula-section">
+            <label class="formula-btn file_btn">
+              <span class="material-icons">add_photo_alternate</span>
+              <input class="file_input js_convertToFormula_pic" type="file" accept="image/png, image/jpeg">
+            </label>
+          </div>
+        </div>
+        <div class="mathForm_btns--mobile">
+          <p>※スマホ版での数式入力ボタンは未対応です。</p>
+          <label class="formula-btn file_btn">
+            <span class="material-icons">add_photo_alternate</span>
+            <input class="file_input js_convertToFormula_pic--mobile" type="file" accept="image/png, image/jpeg">
+          </label>
+        </div>
+        <div class="ip_forms ip_forms--shrink">
+          <p class="ip_forms-l_head">▼ここに返信を入力して下さい。</p>
+          <input id="textarea-TAB-{{forloop.counter}}1" type="radio" name="TAB{{forloop.counter}}" class="tab-switch"
+            checked="checked" />
+          <label class="tab-label" for="textarea-TAB-{{forloop.counter}}1">入力欄</label>
+          <textarea name="text" class="mathForm_input post-textarea tab-content" placeholder="返信を入力">
+$ f(x) = y $
+$$ \displaystyle \sum_{i=1}^n a_n $$
+                        </textarea>
+          <p class="ip_forms-r_head">▼ここにプレビューが表示されます。</p>
+          <input id="textarea-TAB-{{forloop.counter}}2" type="radio" name="TAB{{forloop.counter}}" class="tab-switch" />
+          <label class="tab-label" for="textarea-TAB-{{forloop.counter}}2">投稿プレビュー</label>
+          <div class="mathForm_box post-textarea post-preview tab-content">
+            <p class="mathForm_output"></p>
+          </div>
+        </div>
+        <button class="js-post_btn post_btn normal_btn" type="button">返信を投稿</button>
+        <div class="form-error post_form-error">
+          <p class="js-post_error">{% if error_message %}{{error_message}}{% endif %}&nbsp;</p>
+        </div>
+      </div>
+      {% elif status == 'guest' %}
+      <div class="nologined_covered l-reply-box">
+        <p>ログインをすると返信することができます。</p>
+        <a class="normal_btn" href="{% url 'mathQA:login' %}">ログイン画面へ</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endfor %}
+
+{% if question.bestAnswer %}
+<section class="l-post l-ans-box">
+  <div class="l-left_post_box">
+    {% if status == 'logging' %}
+    <div class="post-poster_icon"><img src="{{MEDIA_URL}}{{user.icon}}" alt="投稿者アイコン"></div>
+    {% endif %}
+  </div>
+  <div class="l-right_post_box">
+    {% if status == 'logging' %}
+    {% csrf_token %}
+    <div class="mathForm" data-json='{"post_url": "/detail/{{questionID}}/", "method": "answer"}'>
+      <div class="mathForm-title">
+        <p>回答入力欄</p>
+        <label class="toggle">
+          <input type="checkbox" class="toggle-checkbox is_expanded_toggle">
+          <span class="toggle-control"></span>
+        </label>
+        <p class="mathForm-toggle_lead">回答欄を広げる</p>
+        <label class="toggle">
+          <input type="checkbox" class="toggle-checkbox is_fixed_toggle">
+          <span class="toggle-control"></span>
+        </label>
+        <p class="mathForm-toggle_lead">数式ボタンを固定</p>
+      </div>
+      <div class="mathForm_btns">
+        <div class="formula-section formula-section-special"></div>
+        <div class="formula-section formula-section-symbol"></div>
+        <div class="formula-section formula-section-function"></div>
+        <div class="formula-section">
+          <label class="formula-btn file_btn">
+            <span class="material-icons">add_photo_alternate</span>
+            <input class="file_input js_convertToFormula_pic" type="file" accept="image/png, image/jpeg">
+          </label>
+        </div>
+      </div>
+      <div class="mathForm_btns--mobile">
+        <p>※スマホ版での数式入力ボタンは未対応です。</p>
+        <label class="formula-btn file_btn">
+          <span class="material-icons">add_photo_alternate</span>
+          <input class="file_input js_convertToFormula_pic--mobile" type="file" accept="image/png, image/jpeg">
+        </label>
+      </div>
+      <div class="ip_forms ip_forms--shrink">
+        <p class="ip_forms-l_head">▼ここに回答を入力して下さい。</p>
+        <input id="textarea-TAB-001" type="radio" name="TAB-1" class="tab-switch" checked="checked" />
+        <label class="tab-label" for="textarea-TAB-001">入力欄</label>
+        <textarea name="text" class="mathForm_input post-textarea tab-content" placeholder="回答を入力">
+<!-- $ f(x) = y $
+$$ \displaystyle \sum_{i=1}^n a_n $$ -->
+                  </textarea>
+        <p class="ip_forms-r_head">▼ここにプレビューが表示されます。</p>
+        <input id="textarea-TAB-002" type="radio" name="TAB-1" class="tab-switch" />
+        <label class="tab-label" for="textarea-TAB-002">投稿プレビュー</label>
+        <div class="mathForm_box post-textarea post-preview tab-content">
+          <p class="mathForm_output"></p>
+        </div>
+      </div>
+      <button class="js-post_btn post_btn normal_btn" type="button">回答を投稿</button>
+      <div class="form-error post_form-error">
+        <p class="js-post_error">{% if error_message %}{{error_message}}{% endif %}&nbsp;</p>
+      </div>
+    </div>
+    {% elif status == 'guest' %}
+    <div class="nologined_covered">
+      <p>ログインをすると回答することができます。</p>
+      <a class="normal_btn" href="{% url 'mathQA:login' %}">ログイン画面へ</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
+
+
+{% endblock main %}
+
+{% block js-end-load %}
+<script>
+  var questionID = '{{questionID}}';
+</script>
+<script defer src="{% md5url 'js/mathForm.js' %}"></script>
+<script defer src="{% md5url 'js/detail.js' %}"></script>
+{% endblock %}

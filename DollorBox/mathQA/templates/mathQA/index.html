@@ -1,0 +1,23 @@
+{% load static %}
+{% load md5url %}
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mathQA | トップ</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <a href="{% url 'mathQA:writeQ' %}">質問ページ</a><br>
+  <a href="{% url 'mathQA:searchResult' 1 %}">検索結果</a><br>
+  <a href="{% url 'mathQA:login' %}">ログイン</a><br>
+  <a href="{% url 'mathQA:logout' %}">ログアウト</a><br>
+  <a href="{% url 'mathQA:user' %}">ユーザーページ</a>
+  <script defer src="{% md5url 'js/common.js' %}"></script>
+  <script defer src="{% md5url 'js/index.js' %}"></script>
+</body>
+
+</html>

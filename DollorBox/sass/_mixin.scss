@@ -1,0 +1,21 @@
+@mixin center() {
+  display: flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin btn-link() {
+  display: block;
+  border-radius: 3px;
+  text-decoration: none;
+  &:link{
+    color: $color-black;
+  }
+}
+
+@mixin mq($breakpoint: sp) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}

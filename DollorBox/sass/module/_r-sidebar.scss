@@ -1,0 +1,31 @@
+.relation_questions {
+  margin-bottom: 3rem;
+}
+
+.r_sidevar-question_link {
+  padding-left: 0;
+}
+
+.r_sidevar-question_link:hover {
+  padding-left: .5rem;
+}
+
+.r_sidevar-question_link > a {
+  width: 100%;
+  color: $color-light-blue;
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.r_sidevar-question_link {
+  margin-top: .5rem;
+  width: 100%;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 480px){
+  .l-r_sidebar{
+    margin-top: 5rem;
+  }
+}

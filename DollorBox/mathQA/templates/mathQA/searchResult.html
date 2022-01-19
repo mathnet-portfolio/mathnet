@@ -1,0 +1,125 @@
+{% extends "mathQA/layouts/base.html" %}
+{% load static %}
+{% load md5url %}
+
+{% block level-head %}
+<meta property="og:url" content="https://mathnet.biz/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="質問一覧">
+<meta property="og:description" content="数学のためのQ&amp;Aサイト。数学好きが集まる、数学のなぜ？どうやって？を質問する場所。LaTeXで数式がキレイに書けます。">
+{% endblock level-head %}
+
+{% block tab-title %}ホーム{% endblock %}
+
+{% block nav-now %}<a href="{% url 'mathQA:index'  %}">ホーム</a>{% endblock %}
+
+{% block level-body_tag %}
+{% if not user.verified and user.is_authenticated %}
+<section class="l-popBg popBg">
+  <div class="l-pop pop">
+    <div class="close_btn">
+      <span class="material-icons close_icon">close</span>
+    </div>
+    <div class="pop-title">
+      <p>メールを確認してね</p>
+    </div>
+    <div class="pop-body">
+      <p>{{ user.email }}にメールをお送りしました。ご確認下さいm(_ _)m</p>
+    </div>
+    <button id="pop-conf_btn" class="normal_btn pop-conf_btn">了解</button>
+  </div>
+</section>
+{% endif %}
+{% endblock level-body_tag %}
+
+{% block main %}
+{% for q in questionSet %}
+<section class="l-list q-list">
+  <div class="l-list-left">
+    {% if q.question.bestAnswer %}
+    <div class="list-q_stat list-q_stat--solved">
+      <p>解決済</p>
+    </div>
+    {% else %}
+    <div class="list-q_stat">
+      <p>受付中</p>
+    </div>
+    {% endif %}
+  </div>
+  <div class="l-list-right">
+    <div class="list-tag">
+      {% for tag in q.question.tags.all %}
+      <a href="{% url 'mathQA:tagSearchResult' tag 1  %}" class="list-tag-item"><span
+          class="material-icons">tag</span>{{tag}}</a>
+      {% endfor %}
+    </div>
+    <div class="list-content">
+      <p>
+        {{q.question.title}}
+        {{q.content}}
+      </p>
+    </div>
+    <a class="list-link" href="{% url 'mathQA:detail' q.question.id %}">質問を見る<span
+        class=" material-icons">navigate_next</span></a>
+    <div class="post-footer">
+      <div class="post-footer-wrap">
+        <div class="post-footer-item list-pv">
+          <p>PV {{q.question.cntBrowsed}}</p>
+        </div>
+        <div class="post-footer-item list-evaluation">
+          <p><span class="material-icons">favorite</span>{{q.question.goodinfo_set.all|length}}</p>
+        </div>
+        <div class="post-footer-item post-date">
+          <p>{{q.question.updated_at|date:"Y/m/d"}}</p>
+        </div>
+        <div class="post-footer-item psot-time">
+          <p>{{q.question.updated_at|date:"H:i"}}</p>
+        </div>
+      </div>
+      <div class="post-footer-wrap">
+        <div class="post-footer-item post-poster">
+          <p>{{q.question.customUser.username}}</p>
+        </div>
+      </div>
+      <div class="post-footer-wrap">
+        <div class="post-footer-item post-poster_icon"><img src="{{MEDIA_URL}}{{q.question.customUser.icon}}"
+            alt="投稿者アイコン">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endfor %}
+
+<div class="l-range">
+  {% with ''|center:matomeNum as range %}
+  {% for _ in range %}
+  {% if "/tags/" in request.path %}
+  {% if start == forloop.counter %}
+  <a class="range-box range-box--now"
+    href="{% url 'mathQA:tagSearchResult' tag forloop.counter %}">{{forloop.counter}}</a>
+  {% else %}
+  <a class="range-box" href="{% url 'mathQA:tagSearchResult' tag forloop.counter %}">{{forloop.counter}}</a>
+  {% endif %}
+  {% else %}
+  {% if start == forloop.counter %}
+  <a class="range-box range-box--now" href="{% url 'mathQA:searchResult' forloop.counter %}">{{forloop.counter}}</a>
+  {% else %}
+  <a class="range-box" href="{% url 'mathQA:searchResult' forloop.counter %}">{{forloop.counter}}</a>
+  {% endif %}
+  {% endif %}
+  {% endfor %}
+  {% endwith %}
+</div>
+{% endblock main %}
+
+{% block js-end-load %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"
+  integrity="sha512-aUhL2xOCrpLEuGD5f6tgHbLYEXRpYZ8G5yD+WlFrXrPy2IrWBlu6bih5C9H6qGsgqnU6mgx6KtU8TreHpASprw=="
+  crossorigin="anonymous"></script>
+<script defer src="{% md5url 'js/searchResult.js' %}"></script>
+<script>
+  searchResult_isLogined = "{{ user.is_authenticated }}";
+  searchResult_isVerified = "{{ user.verified }}";
+</script>
+{% endblock %}

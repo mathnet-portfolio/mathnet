@@ -1,0 +1,165 @@
+.doorway-msg {
+  @include center;
+  align-items: flex-start;
+  background-color: $color-light-blue;
+}
+
+.doorway-msg-wrapper {
+  margin-top: 15vh;
+  @include mq('tab') {
+    margin: 1rem 1rem;
+  }
+}
+
+.doorway-msg * {
+  color: $color-white;
+  font-size: 1.2rem;
+  @include mq('sp') {
+    font-size: 1rem;
+  }
+}
+
+.doorway-msg-title {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  @include mq('sp') {
+    font-size: 1.5rem;
+  }
+}
+
+.doorway-msg-lead {
+  margin-bottom: 2rem;
+}
+
+.doorway-msg-point > li{
+  margin-bottom: 1rem;
+}
+
+.doorway-main-wrapper {
+  width: 17rem;
+  max-width: 100%;
+  margin-top: 15vh;
+  margin-left: 3rem;
+  padding-bottom: 5rem;
+  @include mq('tab') {
+    margin: 2rem 0;
+  }
+}
+
+.doorway-goto {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.doorway-section {
+  margin-bottom: 2rem;
+}
+
+.doorway-section-title {
+  margin-bottom: 1rem;
+  color: $color-dark-gray;
+  text-align: center;  
+}
+
+// 参考: https://developers.google.com/identity/branding-guidelines?hl=ja
+$height-sns_login: 2.5rem;
+.doorway-sns_login {
+  width: 100%;
+  a {
+    display: flex;
+    width: 100%;
+    height: $height-sns_login;
+    margin-bottom: 1rem;
+    padding: $height-sns_login * 11 / 40 $height-sns_login * 8 / 40;
+    box-shadow: 0 0 1px 1px #ccc;
+    cursor: pointer;
+  }
+  a:hover {
+    box-shadow: 0 0 2px 2px #ccc;
+  }
+}
+
+.doorway-sns_login-icon {
+  height: $height-sns_login * 18 / 40;
+  margin-right: $height-sns_login * 24 / 40;
+  img {
+    height: 100%;
+  }
+}
+
+.doorway-sns_login-text {
+  font-family: 'Roboto', sans-serif;
+  font-size: $height-sns_login * 18 / 40;
+  color: rgba($color: #000000, $alpha: .54)
+}
+
+.doorway-main-item {
+  display: block;
+  margin-top: 2em;
+}
+
+.oneline_input {
+  color: $color-dark-gray;
+  padding: .3rem;
+  padding-top: 1rem;
+  font-size: 1.2rem;
+  border-bottom: 1px solid  $color-light-gray;
+}
+
+.oneline_input:focus {
+  border-color: $color-light-blue;
+}
+
+.doorway-button {
+  display: block;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.doorway-input {
+  width: 100%;
+}
+
+.normal_checkbox {
+  display: block;
+  position: relative;
+  padding: 1rem 0 1rem 2rem;
+  user-select: none;
+  input {
+    opacity: 0;
+    &:checked + span::before {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpolyline fill='none' stroke='%232ea8ff' stroke-width='3' points='2,7.3 7.3,12.7 18,2 '/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 0 2px;
+    }
+  }
+  span::before {
+    content: '';
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    top: (3rem - 1.5rem) / 2;
+    left: 0;
+    background:$color-white;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid  $color-light-gray;
+    border-radius: .2rem;
+  }
+  span::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 1.2rem;
+    left: .5rem;
+    width: 10px;
+    height: 14px;
+    margin-top: -7px;
+    border-right: 3px solid $color-light-blue;
+    border-bottom: 3px solid $color-light-blue;
+    transform: rotate(45deg);
+    opacity: 0;
+  }
+}

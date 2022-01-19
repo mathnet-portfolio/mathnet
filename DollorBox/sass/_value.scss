@@ -1,0 +1,20 @@
+$color-black: #333;
+$color-white: #f5f5f5;
+$color-orange: #db721c;
+$color-dark-blue: #1C5D7E;
+$color-light-blue: #2ea8ff;
+$color-light-gray: #ccc;
+$color-dark-gray: #999;
+
+
+// レイアウト幅
+$bp-tab-pc: 900px;
+$bp-sp-tab: 560px;
+
+// ブレークポイント
+$breakpoints: (
+  "sp": "(max-width: #{$bp-sp-tab})",
+  "tab": "(max-width: #{$bp-tab-pc - 1px})",
+  "pc": "(min-width: #{$bp-tab-pc})",
+);
+

@@ -1,0 +1,85 @@
+
+
+.l-post {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  @include mq('sp') {
+    flex-direction: column;
+  }
+}
+
+.l-left_post_box {
+  margin-right: 3rem;
+}
+
+.l-right_post_box {
+  width: 100%;
+}
+
+.l-ans-box {
+  margin-top: 2rem;
+}
+
+.l-reply {
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.l-reply-box {
+  width: 90%;
+  margin-left: 10%;
+}
+
+// 質問リスト
+
+.l-list {
+  display: flex;
+  justify-content: center;
+  @include mq('sp') {
+    display: block;
+  }
+}
+
+.l-list-left {
+  width: 5rem;
+  
+}
+
+.l-list-right {
+  flex: 1;
+  margin-left: 1rem;
+  @include mq('sp') {
+    margin: 1rem 0;
+  }
+}
+
+.l-setting-menus {
+  flex: 0 0 8rem;
+}
+
+.l-setting-main {
+  flex: 0 0 calc(100% - 8rem);
+}
+
+.l-popBg {
+  position: fixed;
+  z-index: 200;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  @include center;
+}
+
+.l-pop {
+  
+}
+
+.l-range {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 5rem;
+}

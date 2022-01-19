@@ -1,0 +1,137 @@
+{% extends "mathQA/layouts/base.html" %}
+{% load static %}
+{% load md5url %}
+
+{% block tab-title %}質問投稿{% endblock %}
+
+{% block l_sidebar %}
+{% endblock l_sidebar %}
+
+{% block body_class %}no_side_bar_body{% endblock %}
+
+{% block level-body_tag %}
+<article id="app" class="l-main--writeQ">
+  <div class="progress">
+    <div class="progress-num" :class="[ nowCardNum == 1 ? 'progress-num--now' : '']">
+      <p>1</p>
+    </div>
+    <div class="progress-line"></div>
+    <div class="progress-num" :class="[ nowCardNum == 2 ? 'progress-num--now' : '']">
+      <p>2</p>
+    </div>
+    <div class="progress-line"></div>
+    <div class="progress-num" :class="[ nowCardNum == 3 ? 'progress-num--now' : '']">
+      <p>3</p>
+    </div>
+  </div>
+  <transition-group :name="transName" tag="div">
+    <section class="card card_1" v-show="nowCardNum == 1" key="1">
+      <div class="card-header">
+        <div class="card-header-item card-header-back"></div>
+        <div class="card-header-item card-header-help" @click="help()"><span class="material-icons">help</span>ヘルプ</div>
+        <div class="card-header-item card-header-skip" @click="nextCard()">次へ<span
+            class=" material-icons">navigate_next</span></div>
+      </div>
+      <div class="card-desc">わからない問題の画像をアップロード</div>
+      <label for="card-file_upload">
+        <span class="card-file_upload">
+          <input id="card-file_upload" @change="upload" type="file" accept="image/png, image/jpeg" multiple="multiple">
+          <span class="material-icons">add_photo_alternate</span>
+          <p>画像をアップロード</p>
+        </span>
+      </label>
+      <post-img v-for="(pic, i) in pictures" :key="pic.altName" :pic="pic" :pic-index="i" :can-edit="true"
+        @del-pic="delPic($event)">
+      </post-img>
+    </section>
+
+    <section class="card card_2" v-show="nowCardNum == 2" key="2">
+      <div class="card-header">
+        <div class="card-header-item card-header-back" @click="prevCard()"><span
+            class="material-icons">navigate_before</span>戻る</div>
+        <div class="card-header-item card-header-help" @click="help()"><span class="material-icons">help</span>ヘルプ</div>
+        <div class="card-header-item card-header-skip" @click="nextCard()">次へ<span
+            class="material-icons">navigate_next</span></div>
+      </div>
+      <div class="card-desc">簡単にわからない箇所をまとめよう</div>
+      <!-- <textarea class="card-textarea" v-model="contents" placeholder="(2)の式変形がわかりません。"></textarea> -->
+      <div class="mathForm card-textarea">
+        <div class="mathForm_btns">
+          <div class="formula-section formula-section-special"></div>
+          <div class="formula-section formula-section-symbol"></div>
+          <div class="formula-section formula-section-function"></div>
+          <!-- <div class="formula-section">
+            <label class="formula-btn file_btn">
+              <span class="material-icons">add_photo_alternate</span>
+              <input class="file_input js_convertToFormula_pic" type="file" accept="image/png, image/jpeg">
+            </label>
+          </div> -->
+        </div>
+        <div class="mathForm_btns--mobile">
+          <!-- <p>※スマホ版での数式入力ボタンは未対応です。</p> -->
+          <!-- <label class="formula-btn file_btn">
+            <span class="material-icons">add_photo_alternate</span>
+            <input class="file_input js_convertToFormula_pic--mobile" type="file" accept="image/png, image/jpeg">
+          </label> -->
+        </div>
+        <div class="ip_forms ip_forms--shrink">
+          <p class="ip_forms-l_head">▼ここに回答を入力して下さい。</p>
+          <input id="textarea-TAB-01" type="radio" name="TAB" class="tab-switch" checked="checked" />
+          <label class="tab-label" for="textarea-TAB-01">入力欄</label>
+          <textarea name="text" class="mathForm_input post-textarea tab-content" placeholder="(2)の式変形がわかりません。"
+          v-model="contents"></textarea>
+          <p class="ip_forms-r_head">▼ここにプレビューが表示されます。</p>
+          <input id="textarea-TAB-02" type="radio" name="TAB" class="tab-switch" />
+          <label class="tab-label" for="textarea-TAB-02">投稿プレビュー</label>
+          <div class="mathForm_box post-textarea post-preview tab-content">
+            <p class="mathForm_output"></p>
+          </div>
+        </div>
+      </div>
+      <post-img v-for="(pic, i) in pictures" :key="pic.altName" :pic="pic" :pic-index="i" :can-edit="false"
+        @del-pic="delPic($event)">
+      </post-img>
+    </section>
+
+    <section class="card card_3" v-show="nowCardNum == 3" key="3">
+      <div class="card-header">
+        <div class="card-header-item card-header-back" @click="prevCard()"><span
+            class="material-icons">navigate_before</span>戻る</div>
+        <div class="card-header-item card-header-help" @click="help()"><span class="material-icons">help</span>ヘルプ</div>
+        <div class="card-header-item card-header-skip"></div>
+      </div>
+      <div class="card-desc">タグをつけると早く回答がつくよ</div>
+      <div class="card-tag_s">
+        <input class="card-tag_s-input" v-model="tagSearchText" ref="tag_search" type="text" placeholder="つけたいタグを検索">
+        <button class="card-tag_s-search_btn"><span class="material-icons">search</span></button>
+        <div class="card-tag_s-res" :class="[ searchTagsRes.length > 0 ? 'card-tag_s-res--shown' : '']">
+          <template v-for="res in searchTagsRes">
+            <div class="card-tag_s-res-item" @click="addTag(res)"><span class="material-icons">add_box</span> [[ res ]]
+            </div>
+          </template>
+        </div>
+      </div>
+      <template v-for="(tag, i) in tags">
+        <div class="card-tag"><span class="material-icons">tag</span> [[ tag ]]<span class="material-icons"
+            @click="delTag(i)">delete</span></div>
+      </template>
+      <button class="card-submit" @click="sendQes()">質問する</button>
+    </section>
+  </transition-group>
+</article>
+{% endblock level-body_tag %}
+
+{% block r_sidebar %}
+{% endblock r_sidebar %}
+
+{% block js-end-load %}
+<script>
+  let search_tag_data = JSON.parse('{{js|safe}}')
+</script>
+<script defer src="{% md5url 'js/mathForm.js' %}"></script>
+<script defer src="{% md5url 'js/writeQ.js' %}"></script>
+{% endblock %}
+
+
+{% block nav %}
+  {% endblock %}

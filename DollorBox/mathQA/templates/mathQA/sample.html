@@ -1,0 +1,154 @@
+{% load static %}
+{% load md5url %}
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1C5D7E">
+  <title>マスネット | 質問投稿</title>
+  <link rel="icon" href="{% md5url 'img/favicon.ico' %}">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="{% md5url 'css/style.css' %}">
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        processEscapes: true,
+        autoload: {
+          color: [],
+          colorV2: ['color']
+        },
+        packages: { '[+]': ['noerrors'] }
+      },
+      chtml: {
+        matchFontHeight: false,
+        displayAlign: "left",
+        displayIndent: "1em",
+      },
+      loader: {
+        load: ['[tex]/noerrors']
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+  <header class="l-header header">
+    <div class="header-logo">
+      <a href="{% url 'mathQA:index' %}">
+        <img src="{% md5url 'img/header-logo.png' %}" alt="マスネットロゴ">
+      </a>
+    </div>
+    <input type="text" class="searchBox" placeholder="質問を検索">
+    <button class="searchBtn">
+      <span class="material-icons searchBox-icon">search</span>
+    </button>
+    <a class="goToQuestionBtn" href="{% url 'mathQA:writeQ' %}">疑問を解決する</a>
+    {% if status == 'guest' %}
+    <a class="header-btn" href="{% url 'mathQA:login' %}">ログイン</a>
+    <a class="header-btn header-registerBtn" href="{% url 'mathQA:register' %}">新規登録</a>
+    {% else %}
+    <div class="header-icon">
+      <a href="{% url 'mathQA:user' %}"><img src="{{ MEDIA_URL }}{{ userData.icon }}" alt="マイアイコン"></a>
+    </div>
+    {% endif %}
+  </header>
+  <div class="l-header-Bg"></div>
+
+  <div class="l-body">
+    <nav class="l-l_sidebar">
+      <div class="nav-topic_path">
+        <a href="{% url 'mathQA:index' %}">ホーム</a> >
+        <a href="{% url 'mathQA:searchResult' 1 %}">質問投稿</a>
+      </div>
+      <div class="nav-title_path">
+        <a href="{% url 'mathQA:index' %}">ホーム</a>
+        <a href="{% url 'mathQA:writeQ' %}">質問する</a>
+        <a href="{% url 'mathQA:undone' %}">タグ検索</a>
+        <a href="{% url 'mathQA:undone' %}">ユーザ検索</a>
+        <a href="{% url 'mathQA:user' %}">設定</a>
+      </div>
+    </nav>
+
+    <article class="l-main">
+      <!-- ここから -->
+      <section class="l-post">
+        <p class="ermsg"></p>
+        <div class="l-right_post_box">
+          {% csrf_token %}
+          <div class="mathForm" data-json='{"post_url": "/writeQ/"}'>
+            <div class="textara_title">
+              <input class="js-question-title oneline_input question-title" type="text" placeholder="質問タイトルを入力"
+                name="title" autocomplete="off">
+            </div>
+            <div class="mathForm_btns">
+              <input class="normal_btn js_convertToFormula_inline" type="button" value="inline">
+              <input class="normal_btn js_convertToFormula_display" type="button" value="display">
+              <input class="normal_btn js_convertToFormula_frac" type="button" value="frac">
+              <input class="normal_btn js_convertToFormula_sqrt" type="button" value="sqrt">
+              <input class="normal_btn js_convertToFormula_bottom" type="button" value="bottom">
+              <input class="normal_btn js_convertToFormula_sigma" type='button' value="sigma">
+              <input class="normal_btn js_convertToFormula_tag" type="button" value="tag">
+              <label class="normal_btn file_btn">
+                画像を挿入
+                <input class="file_input js_convertToFormula_pic" type="file">
+              </label>
+            </div>
+            <textarea name="text" class="mathForm_input post-textarea" placeholder="質問を入力"></textarea>
+            <div class="mathForm_box post-textarea post-preview">
+              <p class="mathForm_output"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="l-post">
+        <p class="ermsg"></p>
+        <div class="l-right_post_box">
+          {% csrf_token %}
+          <div class="mathForm" data-json='{"post_url": "/writeQ/"}'>
+            <div class="textara_title">
+              <input class="js-question-title oneline_input question-title" type="text" placeholder="質問タイトルを入力"
+                name="title" autocomplete="off">
+            </div>
+            <div class="mathForm_btns">
+              <input class="normal_btn js_convertToFormula_inline" type="button" value="inline">
+              <input class="normal_btn js_convertToFormula_display" type="button" value="display">
+              <input class="normal_btn js_convertToFormula_frac" type="button" value="frac">
+              <input class="normal_btn js_convertToFormula_sqrt" type="button" value="sqrt">
+              <input class="normal_btn js_convertToFormula_bottom" type="button" value="bottom">
+              <input class="normal_btn js_convertToFormula_sigma" type='button' value="sigma">
+              <input class="normal_btn js_convertToFormula_tag" type="button" value="tag">
+              <label class="normal_btn file_btn">
+                画像を挿入
+                <input class="file_input js_convertToFormula_pic" type="file">
+              </label>
+            </div>
+            <textarea name="text" class="mathForm_input post-textarea" placeholder="質問を入力"></textarea>
+            <div class="mathForm_box post-textarea post-preview">
+              <p class="mathForm_output"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </article>
+
+  </div>
+
+  <footer class="l-footer footer">
+    フッダー なんか書く
+  </footer>
+  <script defer src="{% md5url 'js/common.js' %}"></script>
+  <script defer src="{% md5url 'js/mathForm.js' %}"></script>
+</body>
+
+</html>

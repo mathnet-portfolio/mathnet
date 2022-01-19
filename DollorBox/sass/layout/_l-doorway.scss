@@ -1,0 +1,35 @@
+.l-grid {
+  width: 100%;
+  display: flex;
+  @include mq('tab') {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+// rだけど左
+.l-grid-r {
+  position: fixed;
+  top: 4rem;
+  left: 0;
+  width: 600px;
+  height: calc(100vh - 4rem);
+  overflow: hidden;
+  @include mq('tab') {
+    position: static;
+    width: 100%;
+    height: auto;
+  } 
+}
+
+// lだけど右
+.l-grid-l {
+  flex-shrink: 0;
+  height: calc(100vh - 4rem);
+  margin-left: 600px;
+  margin-bottom: 5rem;
+  @include mq('tab') {
+    margin: 0;
+    height: auto;
+  }
+}

@@ -1,0 +1,194 @@
+#app {
+  position: relative;
+  width: 50rem;
+  margin: auto;
+  min-height: 200vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include mq("tab") {
+    width: 100%;
+    display: block;
+    overflow-x: hidden;
+  }
+}
+
+.progress {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &-num {
+    @include center;
+    $s: 0.7rem;
+    width: $s * 1.2;
+    height: $s * 1.2;
+    padding: $s;
+    border-radius: 100vw;
+    background-color: $color-light-gray;
+    color: $color-white;
+    &--now {
+      background-color: $color-light-blue;
+    }
+  }
+
+  &-line {
+    width: 1rem;
+    margin: 0 0.5rem;
+    border-top: 3px dotted $color-light-gray;
+  }
+}
+
+.card {
+  width: 50rem;
+  position: absolute;
+  top: 2rem;
+  left: 0;
+  @include mq("tab") {
+    width: 100%;
+    margin: 0;
+  }
+  &-header {
+    width: 100%;
+    padding: 1rem 0;
+    @include center;
+    justify-content: space-between;
+    $s: 0.8rem;
+    &-item {
+      font-size: $s;
+      cursor: pointer;
+    }
+    .material-icons {
+      font-size: $s * 1.2;
+    }
+    &-back,
+    &-skip {
+      color: $color-light-blue;
+      flex: 0 0 6rem;
+      text-align: left;
+    }
+    &-skip {
+      color: $color-light-blue;
+      flex: 0 0 6rem;
+      text-align: right;
+    }
+    &-help {
+      color: $color-dark-gray;
+      flex: 1 1 auto;
+      text-align: center;
+    }
+  }
+
+  &-desc {
+    text-align: center;
+    padding: 1rem 0;
+  }
+
+  &-file_upload {
+    @include center;
+    flex-direction: column;
+    width: 80%;
+    height: 10rem;
+    margin: auto;
+    border: 3px dashed $color-light-gray;
+    color: $color-light-gray;
+    .material-icons {
+      display: block;
+      font-size: 3rem;
+    }
+    input[type="file"] {
+      display: none;
+    }
+  }
+  label:not(.tab-label) {
+    display: block;
+  }
+
+  &-pic {
+    position: relative;
+    width: 90%;
+    margin: 1rem auto;
+    box-shadow: 0 0 5px $color-dark-gray;
+    img {
+      width: 100%;
+    }
+    &-del_btn {
+      @include center;
+      position: absolute;
+      $s: 2rem;
+      width: $s;
+      height: $s;
+      top: -$s * 0.5;
+      right: -$s * 0.5;
+      border-radius: 100vw;
+      background-color: $color-orange;
+      .material-icons {
+        font-size: $s * 0.5;
+        color: $color-white;
+      }
+    }
+  }
+
+  &-textarea {
+    margin-top: 3rem;
+    width: 100%;
+    // height: 10rem;
+  }
+
+  &-tag_s {
+    @include center;
+    position: relative;
+    &-input {
+      flex: 1 0 auto;
+      height: 2rem;
+      padding: 0.5rem;
+      border: 1px solid $color-dark-gray;
+      border-radius: 0.2rem;
+    }
+    &-search_btn {
+      @include center;
+      height: 2rem;
+      flex: 0 0 auto;
+      margin-left: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.2rem;
+      color: $color-white;
+      background-color: $color-light-blue;
+    }
+    &-res {
+      display: none;
+      position: absolute;
+      top: 2rem;
+      left: 0;
+      width: 100%;
+      padding: 0.5rem 0.5rem;
+      background-color: $color-white;
+      box-shadow: 1px 0 3px $color-light-gray;
+      &-item {
+        padding: 0.7rem 0;
+      }
+      &--shown {
+        display: block;
+      }
+    }
+  }
+
+  &-tag {
+    @include center;
+    width: 100%;
+    margin: 1rem auto;
+    justify-content: space-between;
+    padding: 0.5rem;
+    border-radius: 0.2rem;
+    background-color: rgba($color: $color-light-blue, $alpha: 0.5);
+  }
+
+  &-submit {
+    width: 100%;
+    margin-top: 2rem;
+    padding: 0.5rem;
+    text-align: center;
+    color: $color-white;
+    background-color: $color-light-blue;
+    border-radius: 0.2rem;
+  }
+}

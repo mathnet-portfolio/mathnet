@@ -1,0 +1,42 @@
+{% extends "mathQA/layouts/base.html" %}
+{% load static %}
+{% load md5url %}
+
+{# これはコメントです。 #}
+{# このskelton.htmlに必要な要素を埋め込んで、各ページのhtmlを生成していきます。 #}
+
+{# タブタイトル #}
+{% block tab-title %}{% endblock %}
+
+{% block header-right_space %}
+{% endblock header-right_space %}
+
+{% block l-body %}
+{% endblock l-body %}
+
+{# 【オプション】これはbodyタグの直下階層に設置したいものをいれます。 #}
+{% block level-body_tag %}
+{% endblock level-body_tag %}
+
+  {# 左サイドバー全体 #}
+  {% block nav %}
+  {% endblock %}
+
+    {# 左サイドバーの現在のパス（パンくず） #}
+    {% block nav-now %}
+    {% endblock %}
+
+  {# メインコンテンツ #}
+  {% block main %}
+  {% endblock main %}
+
+  {# 【オプション】これはbase.htmlで右サイドバーを囲っています。つまり、右サイドバーを消したいときはここを空白にしてください。 #}
+  {% block r_sidebar %}
+  {% endblock r_sidebar %}
+
+  {% block fixer %}
+  {% endblock fixer %}
+
+{# 【オプション】bodyタグ直前で読み込みたいjsファイルです。 #}
+{% block js-end-load %}
+{% endblock %}

@@ -1,0 +1,151 @@
+.lp-fullscreen{
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-image: url("/static/img/LP-back.png");
+}
+
+.lp-text{
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  width: 100%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: 100;
+}
+
+.lp-text > h1{
+  // font-family: Roboto;
+  font-size: 11rem;
+  padding: 0 50px;
+  text-align: center;
+  color: #fff;
+  opacity: 0;
+  animation: fadeIn 2s ease 0.3s forwards;
+  animation-delay: 2s;
+}
+
+.lp-text > p {
+  margin-top: 4rem;
+  font-size: 3rem;
+  text-align: center;
+  color: #fff;
+  opacity: 0;
+  animation: fadeIn 2s ease 0.3s forwards;
+  animation-delay: 1s;
+}
+
+.lp-text > h2{
+  margin-top: 7rem;
+  font-size: 4rem;
+  text-align: center;
+  color: #fff;
+  opacity: 0;
+  animation: fadeIn 2s ease 0.3s forwards;
+  animation-delay: 1s;
+}
+
+.lp-main_explain{
+  width: 70vw;
+  margin: auto;
+}
+
+.lp-main_explain > h2{
+  margin-top: 10rem;
+  font-size: 4rem;
+  text-align: center;
+}
+
+.lp-main_explain > p{
+  margin-top: 3rem;
+  font-size: 2rem;
+  line-height: 2;
+}
+
+.lp-sub_explain{
+  margin-top: 10rem;
+  display: flex;
+}
+
+.lp-sub_explain-img{
+  margin: 0;
+  margin-left: 10vw;
+}
+
+.lp-sub_explain-img > img{
+  width: 40vw;
+}
+
+.lp-sub_explain-text{
+  width: 40vw;
+  margin: 0 5vw;
+}
+
+.lp-sub_explain-text > h2{
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+.lp-sub_explain-text > p{
+  margin-top: 3rem;
+  font-size: 1.2rem;
+  line-height: 2;
+}
+
+.lp-link_to_login > div{
+  display: flex;
+}
+
+.lp-link_to_login > h2{
+  margin-top: 10rem;
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+.lp-link_to_login-register{
+  width: 40vw;
+  margin: 0 5vw;
+}
+
+.lp-link_to_login-register > button{
+  background-color: $color-orange;
+  padding: 4rem 10rem;
+  color: #ffffff;
+  font-size: 3rem;
+  margin: 10rem 0;
+  margin-left: 10rem;
+  border-radius: 10rem;
+}
+
+.lp-link_to_login-register > button:hover{
+  opacity: 0.6;
+}
+
+.lp-link_to_login-login{
+  width: 40vw;
+  margin: 0 5vw;
+}
+
+.lp-link_to_login-login > button{
+  background-color: $color-orange;
+  padding: 4rem 10rem;
+  color: #ffffff;
+  font-size: 3rem;
+  margin: 10rem 0;
+  border-radius: 10rem;
+}
+
+.lp-link_to_login-login > button:hover{
+  opacity: 0.6;
+}
+
+@keyframes fadeIn { /*animetion-nameで設定した値を書く*/
+
+  0% {opacity: 0} /*アニメーション開始時は不透明度0%*/
+
+  100% {opacity: 1} /*アニメーション終了時は不透明度100%*/
+
+}
