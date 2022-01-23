@@ -16,11 +16,11 @@
 
 ![image](https://user-images.githubusercontent.com/45098934/150676522-4e1e50a7-df98-4ed9-b2d4-2fdae4d06398.png)
 
-### 高画質画像の複数投稿
+#### 高画質画像の複数投稿
 
 ![image](https://user-images.githubusercontent.com/45098934/150676529-2347d75b-abc9-4965-9286-2d3629426cb6.png)
 
-### 分野ごとのタグ付与
+#### 分野ごとのタグ付与
 
 ![image](https://user-images.githubusercontent.com/45098934/150676573-759d7832-93a9-47ba-ac13-4feb0c4b58ad.png)
 
